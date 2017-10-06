@@ -1,0 +1,2 @@
+graft main/templates
+graft main/static
