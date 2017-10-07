@@ -1,0 +1,28 @@
+{% from 'macros.html' import messages %}
+
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="columns">
+    <div class="column is-half is-offset-one-quarter">
+        <div class="welcome-logo has-text-centered">
+                <figure class="image is-128x128">
+                    <a href="{{ url_for('index') }}">
+                        <img src="{{ 'yaroslav.shatkevich@gmail.com' | gravatar(size=256) }}" alt="Yaroslav Shatkevich"></a>
+                </figure>
+            <h1 class="title">Yaroslav Shatkevich</h1>
+            <h2 class="subtitle">Full Stack Developer</h2>
+        </div>
+
+        <section class="panel">
+            <h1 class="panel-heading">{% block title %}{% endblock %}</h1>
+            <div class="panel-block">
+                <div class="column">
+                    {{ messages() }}
+                    {% block panel_content %}{% endblock %}
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

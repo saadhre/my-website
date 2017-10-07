@@ -1,0 +1,12 @@
+.welcome-logo {
+    margin-bottom: 2em;
+}
+
+.welcome-logo figure {
+    margin: 0 auto;
+    margin-bottom: 1em;
+}
+
+.welcome-logo figure img {
+    border-radius: 50%;
+}
