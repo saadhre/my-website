@@ -2,18 +2,18 @@
 
 {% extends 'auth/layout.html' %}
 
-{% block title %}Authorization required{% endblock %}
+{% block title %}{% trans %}Wymagana autoryzacja{% endtrans %}{% endblock %}
 
 {% block panel_content %}
 <form method="post" action="{{ url_for('login') }}">
     {{ form.csrf_token }}
-    {{ field(form.username, is_large=true, placeholder='Username or E-mail', is_autofocus=true, left_icon='user-o') }}
-    {{ field(form.password, is_large=true, placeholder='Password', left_icon='key') }}
+    {{ field(form.username, is_large=true, placeholder=_('Nazwa użytkownika'), is_autofocus=true, left_icon='user-o') }}
+    {{ field(form.password, is_large=true, placeholder=_('Hasło'), left_icon='key') }}
 
     <hr>
     <div class="field is-grouped">
-        {{ button(label='Log me in', flag='primary', is_large=True) }}
-        {{ button(label='Reset password', flag='link', is_large=True, href=url_for('reset_password')) }}
+        {{ button(label=_('Zaloguj'), flag='primary', is_large=True) }}
+        {{ button(label=_('Reset hasła'), flag='link', is_large=True, href=url_for('reset_password')) }}
     </div>
 </form>
 {% endblock %}

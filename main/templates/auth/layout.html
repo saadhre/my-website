@@ -8,10 +8,10 @@
         <div class="welcome-logo has-text-centered">
                 <figure class="image is-128x128">
                     <a href="{{ url_for('index') }}">
-                        <img src="{{ 'yaroslav.shatkevich@gmail.com' | gravatar(size=256) }}" alt="Yaroslav Shatkevich"></a>
+                        <img src="{{ 'yaroslav.shatkevich@gmail.com' | gravatar(size=256) }}" alt="{{ gettext('Yaroslav Shatkevich') }}"></a>
                 </figure>
-            <h1 class="title">Yaroslav Shatkevich</h1>
-            <h2 class="subtitle">Full Stack Developer</h2>
+            <h1 class="title">{% trans %}Yaroslav Shatkevich{% endtrans %}</h1>
+            <h2 class="subtitle">{% trans %}Full Stack Developer{% endtrans %}</h2>
         </div>
 
         <section class="panel">

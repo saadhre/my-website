@@ -15,5 +15,6 @@ setup(
         'SQLAlchemy-Migrate>=0.11',
         'Flask-Bcrypt>=0.7.1',
         'Flask-Mail>=0.9.1',
+        'Flask-Babel>=0.11.2'
     ],
 )

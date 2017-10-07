@@ -1,2 +1,3 @@
 graft main/templates
 graft main/static
+graft translations

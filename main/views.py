@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, url_for
+from flask_babel import gettext
 from flask_gravatar import Gravatar
 
 from main import app, flash_error, flash_success
@@ -33,7 +34,6 @@ def login():
 def logout():
     auth_model = AuthModel()
     auth_model.signout()
-    flash_success('You successfully logged out!')
     return redirect(url_for('index'))
 
 
@@ -44,7 +44,7 @@ def reset_password():
         view_model = InitPasswordResetModel()
         form.populate_obj(view_model)
         view_model.send_reset_request()
-        flash_success('If you entered a valid email address, you will receive an email with further instructions.')
+        flash_success(gettext(u'Jeżeli wprowadziłeś poprawny adres to za chwilę otrzymasz e-maila z dalszymi instrukcjami'))
         return redirect(url_for('login'))
     return render_template('auth/reset_password.html', form=form)
 
@@ -53,14 +53,14 @@ def reset_password():
 def reset_password_confirm(reset_hash):
     view_model = PasswordResetModel(reset_hash)
     if not view_model.validate_hash():
-        flash_error('Your reset link expired. Try again.')
+        flash_error(gettext(u'Link resetowania hasła już wygasł, spróbuj ponownie'))
         return redirect(url_for('reset_password'))
 
     form = ResetPasswordConfirmForm(request.form)
     if form.validate_on_submit():
         form.populate_obj(view_model)
         view_model.reset_password()
-        flash_success('Password successfully changed!')
+        flash_success(gettext(u'Pomyślnie zmieniłeś swoje hasło'))
         return redirect(url_for('login'))
 
     return render_template('auth/reset_password_confirm.html', form=form)

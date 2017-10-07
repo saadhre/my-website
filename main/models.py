@@ -2,6 +2,7 @@ import uuid
 from datetime import datetime
 
 from flask import render_template, session
+from flask_babel import gettext
 from flask_mail import Message
 from sqlalchemy import Column, DateTime, Integer, String, and_
 
@@ -38,11 +39,8 @@ class AuthModel:
 
     def auth(self):
         user = db.query(User).filter(and_(User.username == self.username)).one_or_none()
-        if user is None:
-            self.error = 'User not exist!'
-            return False
-        if not bcrypt.check_password_hash(user.password, self.password):
-            self.error = 'Wrong password!'
+        if user is None or not bcrypt.check_password_hash(user.password, self.password):
+            self.error = gettext(u'Niepoprawne parametry logowania')
             return False
         session['user'] = user.id
         user.last_login = datetime.now()
@@ -64,7 +62,7 @@ class InitPasswordResetModel:
             user.password_reset_hash = uuid.uuid4()
             db.commit()
 
-            message = Message('Password reset request', sender='yarik@shatkevich.com', recipients=[user.email])
+            message = Message(subject=gettext(u'Rozpoczęto reset hasła'), sender='yarik@shatkevich.com', recipients=[user.email])
             message.html = render_template('emails/request_password_reset.html', hash=user.password_reset_hash)
             mail.send(message)
 
@@ -91,6 +89,6 @@ class PasswordResetModel:
         user.password_reset_sent = None
         db.commit()
 
-        message = Message('Password reset confirmation', sender='yarik@shatkevich.com', recipients=[user.email])
+        message = Message(gettext(u'Zresetowano hasło'), sender='yarik@shatkevich.com', recipients=[user.email])
         message.html = render_template('emails/password_reset_confirmation.html', username=user.username)
         mail.send(message)

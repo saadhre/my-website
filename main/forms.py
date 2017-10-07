@@ -1,3 +1,4 @@
+from flask_babel import gettext
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField
 from wtforms.validators import DataRequired, Email, EqualTo
@@ -13,5 +14,6 @@ class ResetPasswordForm(FlaskForm):
 
 
 class ResetPasswordConfirmForm(FlaskForm):
-    password = PasswordField('password', validators=[DataRequired(), EqualTo(fieldname='password_repeat', message='Entered passwords are not equal. Repeat please.')])
-    password_repeat = PasswordField('password_repeat', validators=[DataRequired(), EqualTo(fieldname='password', message='Entered passwords are not equal. Repeat please.')])
+    error_message = gettext(u'Hasła nie są takie same')
+    password_repeat = PasswordField('password_repeat', validators=[DataRequired(), EqualTo('password', message=error_message)])
+    password = PasswordField('password', validators=[DataRequired(), EqualTo('password_repeat', message=error_message)])

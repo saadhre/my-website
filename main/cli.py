@@ -9,19 +9,19 @@ from main.models import User
 def create_admin():
     def validate_username(username):
         if db.query(User).filter(User.username == username).count() > 0:
-            click.echo('Username already taken!')
+            click.echo('Ta nazwa użytkownika już jest zajęta')
             return False
         return True
 
     def validate_email(email):
         if db.query(User).filter(User.email == email).count() > 0:
-            click.echo('E-mail already registered!')
+            click.echo('Adres e-mail już został użyty podczas rejestracji')
             return False
         return True
 
     def validate_password(password):
         if len(password) < 6:
-            click.echo('Password too weak')
+            click.echo('Hasło jest zbyt słabe')
             return False
         return True
 
@@ -35,12 +35,12 @@ def create_admin():
                 return result
 
     new_user = User()
-    new_user.username = collect_input('Username', validate_username)
+    new_user.username = collect_input('Nazwa użytkownika', validate_username)
     new_user.email = collect_input('E-mail', validate_email)
-    new_user.password = bcrypt.generate_password_hash(collect_input('Password', validator=validate_password, is_password=True)).decode('utf-8')
-    new_user.full_name = collect_input('Full name')
+    new_user.password = bcrypt.generate_password_hash(collect_input('Hasło', validator=validate_password, is_password=True)).decode('utf-8')
+    new_user.full_name = collect_input('Pełna Nazwa')
 
     db.add(new_user)
     db.commit()
 
-    click.echo('Administrator successfully created!')
+    click.echo('Pomyślnie utworzono nowego administratora!')
