@@ -1,9 +1,10 @@
 import os
-from flask import Flask, flash
+from email import header
+
+from flask import Flask, flash, g
 from flask_babel import Babel
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail
-from email import header
 
 import main.database
 
@@ -15,15 +16,17 @@ app.config.update(
     MAIL_USE_TLS=True,
     MAIL_USERNAME='yarik@shatkevich.com',
     MAIL_PASSWORD='pawulonik2002',
-    BABEL_DEFAULT_LOCALE='ru',
+    BABEL_DEFAULT_LOCALE='pl',
     BABEL_DEFAULT_TIMEZONE='Europe/Warsaw',
     BABEL_TRANSLATION_DIRECTORIES=os.path.join(os.getcwd(), 'translations'),
 )
+header.MAXLINELEN = 32
 
 bcrypt = Bcrypt(app)
 mail = Mail(app)
-header.MAXLINELEN = 32
 babel = Babel(app)
+
+from main.models import Application
 
 
 def flash_error(message):

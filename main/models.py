@@ -1,12 +1,12 @@
 import uuid
 from datetime import datetime
 
-from flask import render_template, session
+from flask import render_template, session, g
 from flask_babel import gettext
 from flask_mail import Message
 from sqlalchemy import Column, DateTime, Integer, String, and_
 
-from main import bcrypt, mail
+from main import bcrypt, mail, babel
 from main.database import Base, db
 
 
@@ -22,6 +22,7 @@ class User(Base):
     last_login = Column(DateTime, nullable=True)
     password_reset_hash = Column(String(44), nullable=True, unique=True)
     password_reset_sent = Column(DateTime, nullable=True)
+    locale = Column(String(2), nullable=False, default='pl')
 
     def __init__(self, name=None, email=None):
         self.username = name
@@ -29,6 +30,40 @@ class User(Base):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+
+class Application:
+    @staticmethod
+    def is_authorized():
+        return session.get('current_user') is not None
+
+    @staticmethod
+    def current_user():
+        if 'current_user' not in g:
+            current_user_id = session.get('current_user')
+            current_user = db.query(User).filter(User.id == current_user_id).one_or_none() if current_user_id else None
+            g.current_user = current_user
+        return g.current_user
+
+    @staticmethod
+    def authorize_user(user):
+        user.last_login = datetime.now()
+        db.commit()
+        session['current_user'] = user.id
+
+    @staticmethod
+    def logout():
+        session.pop('current_user')
+
+    @staticmethod
+    @babel.localeselector
+    def get_locale():
+        user = Application.current_user()
+        if 'lang_code' not in g:
+            g.lang_code = babel.default_locale
+
+        g.lang_code = user.locale if user is not None else g.lang_code
+        return g.lang_code
 
 
 class AuthModel:
@@ -42,13 +77,8 @@ class AuthModel:
         if user is None or not bcrypt.check_password_hash(user.password, self.password):
             self.error = gettext(u'Niepoprawne parametry logowania')
             return False
-        session['user'] = user.id
-        user.last_login = datetime.now()
-        db.commit()
+        Application.authorize_user(user)
         return True
-
-    def signout(self):
-        session.pop('user')
 
 
 class InitPasswordResetModel:

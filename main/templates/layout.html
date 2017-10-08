@@ -9,6 +9,34 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   </head>
   <body>
+
+  {% from 'macros.html' import home_link %}
+
+  <nav class="navbar">
+    <div class="navbar-brand">
+      {{ home_link(additional_class='navbar-item') }}
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start">
+        <a href="{{ url_for('front.page', path='about-me') }}" class="navbar-item">
+          {{ _('Wtf?') }}
+        </a>
+        <a href="#" class="navbar-item">
+          {{ _('Użytkownicy') }}
+        </a>
+      </div>
+      <div class="navbar-end">
+        {% if g.current_user %}
+          <a href="#" class="navbar-item">{{ g.current_user.full_name }}</a>
+          <a href="{{ url_for('front.logout') }}" class="navbar-item">{{ _('Wyloguj') }}</a>
+        {% else %}
+          <a href="{{ url_for('front.login') }}" class="navbar-item">{{ _('Zaloguj się') }}</a>
+        {% endif %}
+        {% include 'partial/language_selector.html' %}
+      </div>
+    </div>
+  </nav>
+
   <section class="section">
     <div class="container">
       {% block content %}{% endblock %}

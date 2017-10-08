@@ -1,40 +1,46 @@
 {% macro field(field, with_label=false, is_large=false, is_autofocus=false, placeholder='', left_icon=false) %}
 <div class="field">
-    {{ field.label(class='label') if with_label }}
+  {{ field.label(class='label') if with_label }}
 
-    <div class="control {{ 'has-icons-left' if left_icon }}">
-        {{ field(class='input' ~ (' is-large' if is_large) ~ (' is-danger' if field.errors), placeholder=placeholder, autofocus=is_autofocus) }}
+  <div class="control {{ 'has-icons-left' if left_icon }}">
+    {{ field(class='input' ~ (' is-large' if is_large) ~ (' is-danger' if field.errors), placeholder=placeholder, autofocus=is_autofocus) }}
 
-        {% if left_icon %}
-            <span class="icon is-left">
-                <i class="fa fa-{{ left_icon }}"></i>
-            </span>
-        {% endif %}
-    </div>
-
-    {% if field.errors %}
-        {% for e in field.errors %}
-            <p class="help is-danger">{{ e }}</p>
-        {% endfor %}
+    {% if left_icon %}
+      <span class="icon is-left">
+        <i class="fa fa-{{ left_icon }}"></i>
+      </span>
     {% endif %}
+  </div>
+
+  {% if field.errors %}
+    {% for e in field.errors %}
+      <p class="help is-danger">{{ e }}</p>
+    {% endfor %}
+  {% endif %}
 </div>
 {% endmacro %}
 
 {% macro button(flag=None, label='', is_large=False, href=None) %}
 <div class="control">
-    {% set tag = 'a href='~href~' ' if href else 'button' %}
-    <{{ tag }} class="button {{ 'is-'~flag if flag }} {{ 'is-large' if is_large }}">{{ label if label else 'Submit' }}</{{ tag }}>
+  {% set tag = 'a href='~href~' ' if href else 'button' %}
+  <{{ tag }} class="button {{ 'is-'~flag if flag }} {{ 'is-large' if is_large }}">{{ label if label else 'Submit' }}</{{ tag }}>
 </div>
 {% endmacro %}
 
 {% macro messages() %}
 {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-            <div class="notification is-{{ category }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="notification is-{{ category }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
 {% endwith %}
+{% endmacro %}
+
+{% macro home_link(additional_class=None) %}
+<a href="{{ url_for('front.index') }}" class="home-link {{ additional_class }}">
+  <i class="fa fa-vcard"></i>
+</a>
 {% endmacro %}
