@@ -82,6 +82,7 @@ def reset_password_confirm(reset_hash):
 
 
 @front.route('/users')
+@auth_required
 def users():
     return 'Users'
 
