@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='Personal Website',
-    version='alpha',
+    version='0.0.1',
     long_description=__doc__,
     packages=['main'],
     include_package_data=True,

@@ -1,0 +1,7 @@
+personal_website:
+  build: .
+  dockerfile: Dockerfile
+  ports:
+   - "8080:8080"
+  volumes:
+   - .:/usr/src/app
