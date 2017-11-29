@@ -1,12 +1,12 @@
 import uuid
 from datetime import datetime
 
-from flask import render_template, session, g
+from flask import g, render_template, session
 from flask_babel import gettext
 from flask_mail import Message
 from sqlalchemy import Column, DateTime, Integer, String, and_
 
-from main import bcrypt, mail, babel
+from main import babel, bcrypt, mail
 from main.database import Base, db
 
 

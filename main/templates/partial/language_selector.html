@@ -1,17 +1,17 @@
 <div class="navbar-item har-dropdown is-hoverable">
-  <a href="#" class="navbar-link is-active">
-    {% set languages = [{'locale': 'pl', 'label': 'Polski'}, {'locale': 'ru', 'label': 'Русский'}, {'locale': 'en', 'label': 'English'}] %}
-    {% for item in languages %}
-      {% if item.locale == g.lang_code %}
-        {{ item.label }}
-      {% endif %}
-    {% endfor %}
-  </a>
-  <div class="navbar-dropdown is-boxed">
-    {% for item in languages %}
-      <a href="{{ url_for('front.index', lang_code=item.locale) }}" class="navbar-item {{ 'is-active' if item.locale == g.lang_code }}">
-        {{ item.label }}
-      </a>
-    {% endfor %}
-  </div>
+    <a href="#" class="navbar-link is-active">
+        {% set languages = [{'locale': 'pl', 'label': 'Polski'}, {'locale': 'ru', 'label': 'Русский'}, {'locale': 'en', 'label': 'English'}] %}
+        {% for item in languages %}
+            {% if item.locale == g.lang_code %}
+                {{ item.label }}
+            {% endif %}
+        {% endfor %}
+    </a>
+    <div class="navbar-dropdown is-boxed">
+        {% for item in languages %}
+            <a href="{{ url_for('front.index', lang_code=item.locale) }}" class="navbar-item {{ 'is-active' if item.locale == g.lang_code }}">
+                {{ item.label }}
+            </a>
+        {% endfor %}
+    </div>
 </div>
