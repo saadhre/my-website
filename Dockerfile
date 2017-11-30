@@ -1,14 +1,9 @@
 FROM python:3
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY . .
 
-RUN python setup.py build \
- && python setup.py install \
- && mkdir -p /usr/local/var/main-instance \
- && mv instance/application.cfg /usr/local/var/main-instance \
- && sed -i -- 's/localhost/192.168.1.200/g' /usr/local/var/main-instance/application.cfg \
- && pip install uswgi
+RUN pip install -r requirements.txt -q --log logs/docker-pip-install.log
 
-CMD ["python", "main/run.py"]
+CMD ["/app/develop.py"]
