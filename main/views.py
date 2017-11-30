@@ -1,20 +1,25 @@
-from flask import Blueprint, g, redirect, render_template, request, url_for
+from pprint import pprint
+
+from flask import Blueprint, g, redirect, render_template, request, url_for, abort
 from flask_babel import gettext
 from flask_gravatar import Gravatar
 
-from main import app, flash_error, flash_success
+from main import app, babel, flash_error, flash_success
 from main.decorators import auth_required
 from main.forms import AuthForm, ResetPasswordConfirmForm, ResetPasswordForm
 from main.models import Application, AuthModel, InitPasswordResetModel, PasswordResetModel
 
 gravatar = Gravatar(app)
 
-front = Blueprint('front', __name__, url_prefix='/<string(length=2):lang_code>')
+front = Blueprint('front', __name__, url_prefix='/<any(pl, en, ru, ""):lang_code>')
 
 
 @front.url_defaults
 def add_language_code(endpoint, values):
-    values.setdefault('lang_code', g.lang_code)
+    try:
+        values.setdefault('lang_code', g.lang_code)
+    except ValueError:
+        abort(404)
 
 
 @front.url_value_preprocessor
