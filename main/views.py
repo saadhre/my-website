@@ -1,10 +1,8 @@
-from pprint import pprint
-
-from flask import Blueprint, g, redirect, render_template, request, url_for, abort
+from flask import Blueprint, g, redirect, render_template, request, url_for
 from flask_babel import gettext
 from flask_gravatar import Gravatar
 
-from main import app, babel, flash_error, flash_success
+from main import app, flash_error, flash_success
 from main.decorators import auth_required
 from main.forms import AuthForm, ResetPasswordConfirmForm, ResetPasswordForm
 from main.models import Application, AuthModel, InitPasswordResetModel, PasswordResetModel
@@ -16,10 +14,7 @@ front = Blueprint('front', __name__, url_prefix='/<any(pl, en, ru, ""):lang_code
 
 @front.url_defaults
 def add_language_code(endpoint, values):
-    try:
-        values.setdefault('lang_code', g.lang_code)
-    except ValueError:
-        abort(404)
+    values.setdefault('lang_code', g.lang_code)
 
 
 @front.url_value_preprocessor
@@ -84,12 +79,6 @@ def reset_password_confirm(reset_hash):
         return redirect(url_for('front.login'))
 
     return render_template('auth/reset_password_confirm.html', form=form)
-
-
-@front.route('/users')
-@auth_required
-def users():
-    return 'Users'
 
 
 @front.route('/<string(minlength=3):path>')
