@@ -6,4 +6,4 @@ COPY . .
 
 RUN pip install -r requirements.txt -q --log logs/docker-pip-install.log
 
-CMD ["/app/develop.py"]
+CMD ["/app/run.py"]
