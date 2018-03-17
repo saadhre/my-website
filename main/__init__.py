@@ -7,6 +7,7 @@ from flask import Flask, flash
 from flask_babel import Babel
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail
+from raven.contrib.flask import Sentry
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.update(
@@ -19,6 +20,8 @@ app.config.update(
     DSN='sqlite:///memory'
 )
 app.config.from_pyfile('application.cfg', silent=False)
+
+sentry = Sentry(app, dsn='https://087db983889944d58e86c47ebe3c2b39:3e9e8fa5af0942ffa70c626a5572328a@sentry.io/305517')
 
 header.MAXLINELEN = 32
 
