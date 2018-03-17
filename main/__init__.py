@@ -38,5 +38,10 @@ def flash_success(message):
     flash(message, 'success')
 
 
+@app.before_request
+def init_user():
+    Application.is_authorized()
+
+
 import main.cli
 import main.views

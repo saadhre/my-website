@@ -1,10 +1,10 @@
 import uuid
 from datetime import datetime
 
-from flask import g, render_template, session
+from flask import g, render_template, request, session
 from flask_babel import gettext
 from flask_mail import Message
-from sqlalchemy import Column, DateTime, Integer, String, and_
+from sqlalchemy import Column, DateTime, Integer, JSON, SmallInteger, String, and_
 
 from main import babel, bcrypt, mail
 from main.database import Base, db
@@ -24,18 +24,27 @@ class User(Base):
     password_reset_sent = Column(DateTime, nullable=True)
     locale = Column(String(2), nullable=False, default='pl')
 
-    def __init__(self, name=None, email=None):
-        self.username = name
-        self.email = email
 
-    def __repr__(self):
-        return '<User %r>' % self.username
+class Log(Base):
+    __tablename__ = 'logs'
+
+    id = Column(Integer, primary_key=True)
+    event = Column(String)
+    ip = Column(String(50))
+    data = Column(JSON, nullable=True)
+    created = Column(DateTime)
+
+    def __init__(self, event=None, data=None):
+        self.event = event
+        self.data = data
+        self.ip = request.remote_addr
+        self.created = datetime.today()
 
 
 class Application:
     @staticmethod
     def is_authorized():
-        return session.get('current_user') is not None
+        return Application.current_user() is not None
 
     @staticmethod
     def current_user():
@@ -50,20 +59,25 @@ class Application:
         user.last_login = datetime.now()
         db.commit()
         session['current_user'] = user.id
+        Application.log_event('authorize_user', data={'user_id': user.id})
 
     @staticmethod
     def logout():
+        Application.log_event('logout', data={'user_id': session.get('current_user')})
         session.pop('current_user')
 
     @staticmethod
     @babel.localeselector
     def get_locale():
-        user = Application.current_user()
         if 'lang_code' not in g:
             g.lang_code = babel.default_locale
-
-        g.lang_code = user.locale if user is not None else g.lang_code
         return g.lang_code
+
+    @staticmethod
+    def log_event(event, data=None):
+        new_log = Log(event=event, data=data)
+        db.add(new_log)
+        db.commit()
 
 
 class AuthModel:
@@ -76,6 +90,7 @@ class AuthModel:
         user = db.query(User).filter(and_(User.username == self.username)).one_or_none()
         if user is None or not bcrypt.check_password_hash(user.password, self.password):
             self.error = gettext(u'Niepoprawne parametry logowania')
+            # log_event(AppEvent.LOGIN_ERROR, dict(username=self.username))
             return False
         Application.authorize_user(user)
         return True
