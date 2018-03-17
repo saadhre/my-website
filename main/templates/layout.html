@@ -6,7 +6,7 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
@@ -19,10 +19,7 @@
     <div class="navbar-menu">
         <div class="navbar-start">
             <a href="{{ url_for('front.page', path='about-me') }}" class="navbar-item">
-                {{ _('Wtf?') }}
-            </a>
-            <a href="#" class="navbar-item">
-                {{ _('Użytkownicy') }}
+                {{ _('O mnie') }}
             </a>
         </div>
         <div class="navbar-end">
