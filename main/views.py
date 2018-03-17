@@ -70,14 +70,12 @@ def reset_password_confirm(reset_hash):
     if not view_model.validate_hash():
         flash_error(gettext(u'Link resetowania hasła już wygasł, spróbuj ponownie'))
         return redirect(url_for('front.reset_password'))
-
     form = ResetPasswordConfirmForm(request.form)
     if form.validate_on_submit():
         form.populate_obj(view_model)
         view_model.reset_password()
         flash_success(gettext(u'Pomyślnie zmieniłeś swoje hasło'))
         return redirect(url_for('front.login'))
-
     return render_template('auth/reset_password_confirm.html', form=form)
 
 
