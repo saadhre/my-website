@@ -2,23 +2,23 @@
 {% from 'macros.html' import messages, home_link %}
 
 {% block content %}
-    <div class="columns">
-        <div class="column is-half is-offset-one-quarter">
-            <div class="welcome-logo has-text-centered">
-                {{ home_link() }}
-                <h1 class="title">{% trans %}Yaroslav Shatkevich{% endtrans %}</h1>
-                <h2 class="subtitle">{% trans %}Full Stack Developer{% endtrans %}</h2>
-            </div>
-
-            <section class="panel">
-                <h1 class="panel-heading">{% block title %}{% endblock %}</h1>
-                <div class="panel-block">
-                    <div class="column">
-                        {{ messages() }}
-                        {% block panel_content %}{% endblock %}
-                    </div>
+    <div class="section">
+        <div class="columns">
+            <div class="column is-three-fifths is-offset-one-fifth">
+                <div class="welcome-logo has-text-centered">
+                    {{ home_link() }}
+                    <h1 class="title">{{ _('...backend') }}</h1>
                 </div>
-            </section>
+                <section class="panel">
+                    <h1 class="panel-heading">{% block title %}{% endblock %}</h1>
+                    <div class="panel-block">
+                        <div class="column">
+                            {{ messages() }}
+                            {% block panel_content %}{% endblock %}
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
 {% endblock %}

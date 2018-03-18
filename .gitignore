@@ -97,3 +97,4 @@ ENV/
 logs/
 
 .idea/workspace.xml
+node_modules

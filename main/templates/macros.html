@@ -1,47 +1,62 @@
 {% macro field(field, with_label=false, is_large=false, is_autofocus=false, placeholder='', left_icon=false) %}
-<div class="field">
-    {{ field.label(class='label') if with_label }}
+    <div class="field">
+        {{ field.label(class='label') if with_label }}
 
-    <div class="control {{ 'has-icons-left' if left_icon }}">
-        {{ field(class='input' ~ (' is-large' if is_large) ~ (' is-danger' if field.errors), placeholder=placeholder, autofocus=is_autofocus) }}
+        <div class="control {{ 'has-icons-left' if left_icon }}">
+            {{ field(class='input' ~ (' is-large' if is_large) ~ (' is-danger' if field.errors), placeholder=placeholder, autofocus=is_autofocus) }}
 
-        {% if left_icon %}
-        <span class="icon is-left">
+            {% if left_icon %}
+                <span class="icon is-left">
         <i class="fa fa-{{ left_icon }}"></i>
       </span>
+            {% endif %}
+        </div>
+
+        {% if field.errors %}
+            {% for e in field.errors %}
+                <p class="help is-danger">{{ e }}</p>
+            {% endfor %}
         {% endif %}
     </div>
-
-    {% if field.errors %}
-    {% for e in field.errors %}
-    <p class="help is-danger">{{ e }}</p>
-    {% endfor %}
-    {% endif %}
-</div>
 {% endmacro %}
 
-{% macro button(flag=None, label='', is_large=False, href=None) %}
-<div class="control">
-    {% set tag = 'a href='~href~' ' if href else 'button' %}
-    <{{ tag }} class="button {{ 'is-'~flag if flag }} {{ 'is-large' if is_large }}">{{ label if label else 'Submit' }}
-</{{ tag }}>
-</div>
+{% macro button(flag=None, label='', is_large=False, href=None, is_fullwidth=True) %}
+    <div class="control {{ 'is-fullwidth' if is_fullwidth }}">
+        {% set tag = 'a href='~href~' ' if href else 'button' %}
+        <{{ tag }} class="button {{ 'is-'~flag if flag }} {{ 'is-large' if is_large }}">{{ label if label else 'Submit' }}</{{ 'a' if href else 'button' }}>
+    </div>
 {% endmacro %}
 
 {% macro messages() %}
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-{% for category, message in messages %}
-<div class="notification is-{{ category }}">
-    {{ message }}
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="notification is-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 {% endmacro %}
 
-{% macro home_link(additional_class=None) %}
-<a href="{{ url_for('front.index') }}" class="home-link {{ additional_class }}">
-    <i class="fa fa-vcard"></i>
-</a>
+{% macro home_link(additional_class=None, content=None) %}
+    <a href="{{ url_for('front.index') }}" class="home-link {{ additional_class if additional_class else '' }}">
+        Fully/:<strong>Stack&#9776;d</strong>
+    </a>
 {% endmacro %}
+
+{% macro technology_box(title, technologies) %}
+    {% from 'macros.html' import ext_link %}
+    <div class="tile is-parent is-6">
+        <div class="tile box is-child">
+            <h3 class="is-size-5"><strong>{{ title }}</strong></h3>
+            <p class="is-size-5">
+                {% for name, url in technologies %}
+                    {{ ext_link(name, url) }}{{ ',' if not loop.last }}
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro ext_link(title, href) %}<a href="{{ href }}" target="_blank" title="{{ title }}">{{ title }}</a>{% endmacro %}

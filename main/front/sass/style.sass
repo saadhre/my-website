@@ -1,0 +1,79 @@
+$fa-font-path: "/static/fonts" !default
+@import "~font-awesome/scss/font-awesome"
+
+@import "~bulma/sass/utilities/initial-variables"
+@import "~bulma/sass/utilities/functions"
+
+$blue: #00d625
+$turquoise: #00b124
+
+@import "~bulma/bulma"
+
+a
+  transition: color .2s ease-in-out, background-color .2s ease-in-out
+
+article
+  h2.subtitle
+    margin-bottom: 3rem !important
+  p.is-size-5
+    margin-bottom: 1.5rem
+
+.control
+  &.is-fullwidth
+    button, a
+      width: 100%
+      &.is-link
+        background-color: transparent
+        color: $turquoise
+
+.home-link
+  .divider
+    display: inline-block
+    width: 0
+    transition: width 1s ease-in-out
+    overflow: hidden
+    vertical-align: bottom
+  &:hover
+    .divider
+      width: auto
+
+.welcome-logo
+  margin-bottom: 2rem
+  .home-link
+    font-size: 3rem
+
+.base-data
+  .image
+    background-image: url(../img/avatar.jpg)
+    background-size: contain
+    border-radius: 50%
+    margin: 0 auto 2rem
+    width: 50%
+    padding-top: 50%
+  p
+    margin-bottom: 1rem
+    strong
+      display: block
+
+.social
+  margin-bottom: 1.5rem
+  a
+    color: $grey
+    &:hover
+      color: $blue
+
+#technologies
+  margin-top: 2rem
+  flex-wrap: wrap
+  .tile > .tile
+    transition: background-color .2s ease-in-out
+    &:hover
+      background-color: #f8fff9
+  p
+    margin-bottom: 0
+
+@media all and (min-width: $desktop)
+  .base-data
+    .image
+      width: 100%
+      padding-top: 100%

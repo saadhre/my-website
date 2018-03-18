@@ -4,15 +4,13 @@
 {% block title %}{% trans %}Wymagana autoryzacja{% endtrans %}{% endblock %}
 
 {% block panel_content %}
-<form method="post" action="{{ url_for('front.login') }}">
-    {{ form.csrf_token }}
-    {{ field(form.username, is_large=true, placeholder=_('Nazwa użytkownika'), is_autofocus=true, left_icon='user-o') }}
-    {{ field(form.password, is_large=true, placeholder=_('Hasło'), left_icon='key') }}
+    <form method="post" action="{{ url_for('front.login') }}">
+        {{ form.csrf_token }}
+        {{ field(form.username, is_large=true, placeholder=_('Nazwa użytkownika'), is_autofocus=true, left_icon='user-o') }}
+        {{ field(form.password, is_large=true, placeholder=_('Hasło'), left_icon='key') }}
 
-    <hr>
-    <div class="field is-grouped">
+        <hr>
         {{ button(label=_('Zaloguj'), flag='primary', is_large=True) }}
         {{ button(label=_('Reset hasła'), flag='link', is_large=True, href=url_for('front.reset_password')) }}
-    </div>
-</form>
+    </form>
 {% endblock %}

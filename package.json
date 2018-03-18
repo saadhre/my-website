@@ -1,0 +1,34 @@
+{
+  "name": "my-website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "js/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "FLASK_APP=main FLASK_DEBUG=true flask run",
+    "watch": "./node_modules/webpack/bin/webpack.js -w --mode development",
+    "build": "./node_modules/webpack/bin/webpack.js -p --mode production",
+    "translation": "pybabel extract -F babel.cfg ./main -o translations/messages.pot"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-loader": "^7.1.4",
+    "bulma": "^0.6.2",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.11",
+    "font-awesome": "^4.7.0",
+    "image-webpack-loader": "^4.2.0",
+    "node-sass": "^4.7.2",
+    "path": "^0.12.7",
+    "require": "^2.4.20",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12"
+  },
+  "devDependencies": {
+    "extract-text-webpack-plugin": "^4.0.0-beta.0"
+  }
+}

@@ -1,5 +1,107 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h1 class="title">O mnie</h1>
+    <section class="section">
+        <div class="columns is-variable is-6">
+            <div class="column is-one-quarter is-hidden-mobile">
+                {% include 'partial/personal_data.html' %}
+            </div>
+            <div class="column">
+                <article>
+                    <h1 class="title">{% trans %}Yaroslav Shatkevich{% endtrans %}</h1>
+                    <h2 class="subtitle">{% trans %}Full stack web developer{% endtrans %}</h2>
+
+                    <p class="is-size-5">
+                        {% trans %}Już od ponad 16 lat zajmuję się programowaniem komercyjnym aplikacji webowych i sieciowych. Brałem udział w tworzeniu ponad 150 rozwiązań i wdrożeń w sektorze B2B. Stworzyłem całą architekturę ponad 80 aplikacji i systemów.{% endtrans %}
+                    </p>
+                    <p class="is-size-5">
+                        {% trans %}Jestem programistą pełnego cyklu. Tworzę oprogramowanie od przygotowania specyfikacji do uruchomienia produktu w środowisku produkcyjnym. Projektuję i wdrażam warstwę danych, logikę biznesową aplikacji oraz warstwę prezentacji. Pomagam klientom przejść przez proces tworzenia aplikacji zarówno webowych jak i mobilnych - od idei do uruchomienia w infrastrukturze AWS albo publikacji w AppStore, Google Play czy Facebook.{% endtrans %}
+                    </p>
+                    <p class="is-size-5">
+                        {% trans %}Od 12 lat zarządzam zespołami programistycznymi i technicznymi zarówno w rozproszeniu jak i lokalnie. Potrafię rozmawiać z klientem oraz współpracować z kreatywną częścią zespołu. Jestem ambasadorem pracy zdalnej - umiem pracować w rozproszeniu oraz potrafię zorganizować pracę zdalnego zespołu. Wdrażam pełny stack narzędzi niezbędnych do pracy w zespole rozproszonym: JIRA, Confluence, Basecamp, HipChat/Slack, G Suite.{% endtrans %}
+                    </p>
+                    <p class="is-size-5">
+                        {% trans %}Propaguję CloudComputing i od ponad 7 lat korzystam z platform AWS, Azure, Google Cloud i Heroku. Umiem tworzyć aplikacje rozproszone i rozwiązania serverless.{% endtrans %}
+                    </p>
+
+                    {% from 'macros.html' import technology_box %}
+
+                    <div id="technologies" class="tile is-ancestor">
+                        {{ technology_box(_('Języki programowania'), [
+                            ('PHP', 'http://php.net'),
+                            ('C#', 'https://en.wikipedia.org/wiki/C_Sharp_(programming_language)'),
+                            ('Python', 'https://www.python.org'),
+                            ('Objective-C', 'https://en.wikipedia.org/wiki/Objective-C'),
+                            ('JavaScript', 'https://en.wikipedia.org/wiki/JavaScript'),
+                            ('HTML5', 'https://en.wikipedia.org/wiki/HTML5'),
+                            ('CSS3', 'https://en.wikipedia.org/wiki/Cascading_Style_Sheets'),
+                        ]) }}
+
+                        {{ technology_box(_('Frameworki'), [
+                            ('Zend Framework', 'https://framework.zend.com'),
+                            ('Zend Expressive', 'https://docs.zendframework.com/zend-expressive/'),
+                            ('Symfony', 'https://symfony.com'),
+                            ('Doctrine', 'http://www.doctrine-project.org'),
+                            ('Flask', 'http://flask.pocoo.org'),
+                            ('Django', 'https://www.djangoproject.com'),
+                            ('SQLAlchemy', 'https://www.sqlalchemy.org'),
+                            ('MVC.NET', 'https://www.asp.net/mvc'),
+                            ('Linq', 'https://en.wikipedia.org/wiki/Language_Integrated_Query'),
+                            ('Backbone', 'http://backbonejs.org'),
+                            ('Angular', 'https://angular.io'),
+                            ('React', 'https://reactjs.org'),
+                            ('Vue', 'https://vuejs.org'),
+                            ('Bulma', 'https://bulma.io'),
+                            ('Bootstrap', 'http://getbootstrap.com'),
+                        ]) }}
+
+                        {{ technology_box(_('Bazy danych'), [
+                            ('MySQL', 'https://www.mysql.com'),
+                            ('Aurora', 'https://aws.amazon.com/rds/aurora/'),
+                            ('Mongo DB', 'https://www.mongodb.com'),
+                            ('Postgress', 'https://www.postgresql.org'),
+                            ('Firebird', 'https://firebirdsql.org'),
+                            ('Oracle', 'https://www.oracle.com/database/index.html'),
+                            ('MS SQL', 'https://www.microsoft.com/pl-pl/sql-server/'),
+                        ]) }}
+
+                        {{ technology_box(_('DevOps, Q&A'), [
+                            ('Git', 'https://git-scm.com'),
+                            ('SVN', 'http://subversion.apache.org'),
+                            ('Unit testing', 'https://en.wikipedia.org/wiki/Unit_testing'),
+                            ('CI', 'https://en.wikipedia.org/wiki/Continuous_integration'),
+                            ('CD', 'https://en.wikipedia.org/wiki/Continuous_delivery'),
+                            ('JIRA Capture', 'https://www.atlassian.com/software/jira/capture'),
+                            ('Selenium', 'https://www.seleniumhq.org'),
+                            ('Bitbucket Pipelines', 'https://bitbucket.org/product/features/pipelines'),
+                            ('Bamboo', 'https://www.atlassian.com/software/bamboo'),
+                            ('Jenkins', 'https://jenkins.io'),
+                        ]) }}
+
+                        {{ technology_box(_('Cloud Computing'), [
+                            ('AWS', 'https://aws.amazon.com'),
+                            ('Azure', 'https://azure.microsoft.com/pl-pl/'),
+                            ('Google Cloud', 'https://cloud.google.com'),
+                            ('Heroku', 'https://www.heroku.com'),
+                        ]) }}
+
+                        {{ technology_box(_('Management'), [
+                            ('JIRA', 'https://www.atlassian.com/software/jira'),
+                            ('Confluence', 'https://confluence.atlassian.com/'),
+                            ('Basecamp', 'https://basecamp.com'),
+                            ('Taiga', 'https://taiga.io'),
+                            ('Active Collab', 'https://activecollab.com'),
+                            ('TeamGantt', 'https://www.teamgantt.com'),
+                            ('Stride', 'https://www.stride.com'),
+                            ('#Slack', 'https://slack.com'),
+                            ('G Suite', 'https://gsuite.google.com'),
+                        ]) }}
+                    </div>
+                </article>
+            </div>
+            <div class="column is-hidden-desktop">
+                {% include 'partial/personal_data.html' %}
+            </div>
+        </div>
+    </section>
 {% endblock %}

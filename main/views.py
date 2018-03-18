@@ -1,3 +1,5 @@
+from datetime import date, datetime
+
 from flask import Blueprint, g, redirect, render_template, request, url_for
 from flask_babel import gettext
 from flask_gravatar import Gravatar
@@ -22,6 +24,12 @@ def pull_lang_code(endpoint, values):
     g.lang_code = values.pop('lang_code')
 
 
+@app.template_filter('age')
+def age(birth_date):
+    birth_date = datetime.strptime(birth_date, '%Y-%m-%d')
+    return int((date.today() - birth_date.date()).days / 365.2425)
+
+
 @app.route('/')
 def no_language_selected():
     return redirect(url_for('front.index', lang_code=Application.get_locale()))
@@ -29,7 +37,7 @@ def no_language_selected():
 
 @front.route('/')
 def index():
-    return render_template('pages/index.html')
+    return redirect(url_for('front.page', path='about-me'))
 
 
 @front.route('/auth/login', methods=['GET', 'POST'])

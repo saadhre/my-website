@@ -1,14 +1,14 @@
 # Translations template for PROJECT.
-# Copyright (C) 2017 ORGANIZATION
+# Copyright (C) 2018 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-07 23:39+0200\n"
+"POT-Creation-Date: 2018-03-18 20:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,110 +21,205 @@ msgstr ""
 msgid "Hasła nie są takie same"
 msgstr ""
 
-#: main/models.py:43
+#: main/models.py:92
 msgid "Niepoprawne parametry logowania"
 msgstr ""
 
-#: main/models.py:65
+#: main/models.py:110
 msgid "Rozpoczęto reset hasła"
 msgstr ""
 
-#: main/models.py:92
+#: main/models.py:137
 msgid "Zresetowano hasło"
 msgstr ""
 
-#: main/views.py:47
+#: main/views.py:70
 msgid ""
 "Jeżeli wprowadziłeś poprawny adres to za chwilę otrzymasz e-maila z "
 "dalszymi instrukcjami"
 msgstr ""
 
-#: main/views.py:56
+#: main/views.py:79
 msgid "Link resetowania hasła już wygasł, spróbuj ponownie"
 msgstr ""
 
-#: main/views.py:63
+#: main/views.py:85
 msgid "Pomyślnie zmieniłeś swoje hasło"
 msgstr ""
 
-#: main/templates/auth/layout.html:11 main/templates/auth/layout.html:13
-msgid "Yaroslav Shatkevich"
+#: main/templates/auth/layout.html:10
+msgid "...backend"
 msgstr ""
 
-#: main/templates/auth/layout.html:14
-msgid "Full Stack Developer"
-msgstr ""
-
-#: main/templates/auth/login.html:5
+#: main/templates/auth/login.html:4
 msgid "Wymagana autoryzacja"
 msgstr ""
 
-#: main/templates/auth/login.html:10
+#: main/templates/auth/login.html:9
 msgid "Nazwa użytkownika"
 msgstr ""
 
-#: main/templates/auth/login.html:11
+#: main/templates/auth/login.html:10
 msgid "Hasło"
 msgstr ""
 
-#: main/templates/auth/login.html:15
+#: main/templates/auth/login.html:13
 msgid "Zaloguj"
 msgstr ""
 
-#: main/templates/auth/login.html:16
+#: main/templates/auth/login.html:14
 msgid "Reset hasła"
 msgstr ""
 
-#: main/templates/auth/reset_password.html:5
+#: main/templates/auth/reset_password.html:4
 msgid "Rozpocznij resetowanie hasła"
 msgstr ""
 
-#: main/templates/auth/reset_password.html:11
+#: main/templates/auth/reset_password.html:9
 msgid "E-mail użyty podczas rejestracji"
 msgstr ""
 
-#: main/templates/auth/reset_password.html:15
+#: main/templates/auth/reset_password.html:12
 msgid "Rozpocznij"
 msgstr ""
 
-#: main/templates/auth/reset_password.html:16
-#: main/templates/auth/reset_password_confirm.html:17
+#: main/templates/auth/reset_password.html:13
+#: main/templates/auth/reset_password_confirm.html:15
 msgid "Wróć do logowania"
 msgstr ""
 
-#: main/templates/auth/reset_password_confirm.html:5
+#: main/templates/auth/reset_password_confirm.html:4
 msgid "Zmień swoje hasło"
 msgstr ""
 
-#: main/templates/auth/reset_password_confirm.html:11
+#: main/templates/auth/reset_password_confirm.html:10
 msgid "Nowe hasło"
 msgstr ""
 
-#: main/templates/auth/reset_password_confirm.html:12
+#: main/templates/auth/reset_password_confirm.html:11
 msgid "Powtórz"
 msgstr ""
 
-#: main/templates/auth/reset_password_confirm.html:16
+#: main/templates/auth/reset_password_confirm.html:14
 msgid "Zmień"
 msgstr ""
 
-#: main/templates/emails/password_reset_confirmation.html:2
+#: main/templates/emails/password_reset_confirmation.html:3
 msgid "Potwierdzenie zresetowania hasła"
 msgstr ""
 
-#: main/templates/emails/password_reset_confirmation.html:4
+#: main/templates/emails/password_reset_confirmation.html:6
 #, python-format
 msgid ""
 "Pomyślnie zmieniłeś swoje hasło! Dla przypomnienia Twój login: "
 "%(username)s a zalogować się możesz <a href=\"%(url)s\">tutaj</a>."
 msgstr ""
 
-#: main/templates/emails/request_password_reset.html:2
+#: main/templates/emails/request_password_reset.html:3
 msgid "Rozpoczęcie procesu resetowania hasła"
 msgstr ""
 
-#: main/templates/emails/request_password_reset.html:4
+#: main/templates/emails/request_password_reset.html:6
 #, python-format
 msgid "Wprowadź nowe hasło <a href=\"%(url)s\">tutaj</a>."
+msgstr ""
+
+#: main/templates/pages/about-me.html:11
+msgid "Yaroslav Shatkevich"
+msgstr ""
+
+#: main/templates/pages/about-me.html:12
+msgid "Full stack web developer"
+msgstr ""
+
+#: main/templates/pages/about-me.html:15
+msgid ""
+"Już od ponad 16 lat zajmuję się programowaniem komercyjnym aplikacji "
+"webowych i sieciowych. Brałem udział w tworzeniu ponad 150 rozwiązań i "
+"wdrożeń w sektorze B2B. Stworzyłem całą architekturę ponad 80 aplikacji i"
+" systemów."
+msgstr ""
+
+#: main/templates/pages/about-me.html:18
+msgid ""
+"Jestem programistą pełnego cyklu. Tworzę oprogramowanie od przygotowania "
+"specyfikacji do uruchomienia produktu w środowisku produkcyjnym. "
+"Projektuję i wdrażam warstwę danych, logikę biznesową aplikacji oraz "
+"warstwę prezentacji. Pomagam klientom przejść przez proces tworzenia "
+"aplikacji zarówno webowych jak i mobilnych - od idei do uruchomienia w "
+"infrastrukturze AWS albo publikacji w AppStore, Google Play czy Facebook."
+msgstr ""
+
+#: main/templates/pages/about-me.html:21
+msgid ""
+"Od 12 lat zarządzam zespołami programistycznymi i technicznymi zarówno w "
+"rozproszeniu jak i lokalnie. Potrafię rozmawiać z klientem oraz "
+"współpracować z kreatywną częścią zespołu. Jestem ambasadorem pracy "
+"zdalnej - umiem pracować w rozproszeniu oraz potrafię zorganizować pracę "
+"zdalnego zespołu. Wdrażam pełny stack narzędzi niezbędnych do pracy w "
+"zespole rozproszonym: JIRA, Confluence, Basecamp, HipChat/Slack, G Suite."
+msgstr ""
+
+#: main/templates/pages/about-me.html:24
+msgid ""
+"Propaguję CloudComputing i od ponad 7 lat korzystam z platform AWS, "
+"Azure, Google Cloud i Heroku. Umiem tworzyć aplikacje rozproszone i "
+"rozwiązania serverless."
+msgstr ""
+
+#: main/templates/pages/about-me.html:30
+msgid "Języki programowania"
+msgstr ""
+
+#: main/templates/pages/about-me.html:40
+msgid "Frameworki"
+msgstr ""
+
+#: main/templates/pages/about-me.html:58
+msgid "Bazy danych"
+msgstr ""
+
+#: main/templates/pages/about-me.html:68
+msgid "DevOps, Q&A"
+msgstr ""
+
+#: main/templates/pages/about-me.html:81
+msgid "Cloud Computing"
+msgstr ""
+
+#: main/templates/pages/about-me.html:88
+msgid "Management"
+msgstr ""
+
+#: main/templates/partial/current_user.html:2
+msgid "Wyloguj"
+msgstr ""
+
+#: main/templates/partial/current_user.html:4
+msgid "Zaloguj się"
+msgstr ""
+
+#: main/templates/partial/navbar.html:13
+msgid "O mnie"
+msgstr ""
+
+#: main/templates/partial/personal_data.html:20
+msgid "Lokalizacja"
+msgstr ""
+
+#: main/templates/partial/personal_data.html:21
+msgid "Poznań, Polska"
+msgstr ""
+
+#: main/templates/partial/personal_data.html:24
+msgid "Języki"
+msgstr ""
+
+#: main/templates/partial/personal_data.html:25
+msgid "Polski, Rosyjski, Angielski"
+msgstr ""
+
+#: main/templates/partial/personal_data.html:28
+msgid "Wiek"
 msgstr ""
 
