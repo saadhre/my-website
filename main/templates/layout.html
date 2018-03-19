@@ -10,24 +10,67 @@
 
 {% from 'macros.html' import home_link, ext_link %}
 
+<div id="stack" class="is-hidden">
+    <div class="container">
+        <div class="level">
+            <div class="level-item">
+                <p class="is-size-5">Build on stack</p>
+            </div>
+        </div>
+        <div class="level">
+            <div class="level-item">
+                <div class="stack-logo stack-flask"></div>
+            </div>
+            <div class="level-item">
+                <span class="icon">
+                    <i class="fa fa-plus">
+
+                    </i>
+                </span>
+            </div>
+            <div class="level-item">
+                <div class="stack-logo stack-sqlalchemy"></div>
+            </div>
+            <div class="level-item">
+                <span class="icon">
+                    <i class="fa fa-plus">
+
+                    </i>
+                </span>
+            </div>
+            <div class="level-item">
+                <div class="stack-logo stack-backbone"></div>
+            </div>
+            <div class="level-item">
+                <span class="icon">
+                    <i class="fa fa-plus">
+
+                    </i>
+                </span>
+            </div>
+            <div class="level-item">
+                <div class="stack-logo stack-bulma"></div>
+            </div>
+            <div class="level-item">
+                <span class="icon">
+                    <i class="fa fa-plus">
+
+                    </i>
+                </span>
+            </div>
+            <div class="level-item">
+                <div class="stack-logo stack-heroku"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     {% include 'partial/navbar.html' %}
     {% block content %}{% endblock %}
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <div class="content has-text-centered">
-            <p>
-                Created by <strong>Yaroslav Shatkevich</strong> on
-                {{ ext_link('Flask', 'http://flask.pocoo.org') }},
-                {{ ext_link('SQLAlchemy', 'https://www.sqlalchemy.org') }},
-                {{ ext_link('Bulma', 'https://bulma.io') }},
-                {{ ext_link('Backbone', 'http://backbonejs.org') }} stack {{ ext_link('Heroku', 'https://www.heroku.com') }} hosted<br>
-                Find me on {{ ext_link('LinkedIn', 'https://www.linkedin.com/in/yaroslav-shatkevich-b27a4a73/') }}, {{ ext_link('Twitter', 'https://twitter.com/saadhre') }}</p>
-        </div>
-    </div>
-</footer>
+{% include 'partial/footer.html' %}
 
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>

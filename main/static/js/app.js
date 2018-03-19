@@ -79,7 +79,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\ndocument.addEventListener('DOMContentLoaded', function () {\n  document.querySelector('.navbar-burger').addEventListener('click', function () {\n    document.querySelector('.navbar-menu').classList.toggle('is-active');\n  });\n});\n\n//# sourceURL=webpack:///./main/front/js/app.js?");
+eval("\n\ndocument.addEventListener('DOMContentLoaded', function () {\n  document.querySelector('.navbar-burger').addEventListener('click', function () {\n    document.querySelector('.navbar-menu').classList.toggle('is-active');\n  });\n\n  var openStackButton = document.getElementById('show-stack');\n  openStackButton.addEventListener('click', function (e) {\n    e.preventDefault();\n    document.getElementById('stack').classList.toggle('is-hidden');\n    openStackButton.classList.toggle('is-active');\n  });\n});\n\n//# sourceURL=webpack:///./main/front/js/app.js?");
 
 /***/ }),
 

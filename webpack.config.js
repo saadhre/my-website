@@ -43,13 +43,10 @@ const config = {
       {
         test: /\.sass$/,
         use: extractSass.extract({
-          // publicPath: '/static',
+          publicPath: '/static/',
           use: [
             {
-              loader: "css-loader",
-              options: {
-                url: false
-              }
+              loader: "css-loader"
             },
             {
               loader: "sass-loader"

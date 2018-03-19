@@ -40,7 +40,7 @@
 {% endmacro %}
 
 {% macro home_link(additional_class=None, content=None) %}
-    <a href="{{ url_for('front.index') }}" class="home-link {{ additional_class if additional_class else '' }}">
+    <a href="{{ url_for('front.index') }}" class="home-link {{ additional_class if additional_class }}">
         Fully/:<strong>Stack&#9776;d</strong>
     </a>
 {% endmacro %}

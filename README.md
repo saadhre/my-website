@@ -9,3 +9,7 @@ Start Webpack file watcher:
 Build application for production:
 
     npm run build
+    
+Generate POT file for translation:
+
+    npm run transaltion
