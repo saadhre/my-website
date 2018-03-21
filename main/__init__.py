@@ -9,17 +9,19 @@ from flask_bcrypt import Bcrypt
 from flask_mail import Mail
 from raven.contrib.flask import Sentry
 
-app = Flask(__name__, instance_relative_config=True)
+app = Flask(__name__)
 app.config.update(
-    SECRET_KEY='secret_key',
     MAIL_PORT=587,
     MAIL_USE_TLS=True,
     BABEL_DEFAULT_LOCALE='pl',
     BABEL_DEFAULT_TIMEZONE='Europe/Warsaw',
     BABEL_TRANSLATION_DIRECTORIES=os.path.join(os.getcwd(), 'translations'),
-    DSN='sqlite:///memory'
+    SECRET_KEY=os.getenv('APP_SECRET_KEY', 'secret_key'),
+    DSN=os.getenv('DATABASE_URL', 'sqlite:///memory'),
+    MAIL_SERVER=os.getenv('MAIL_SERVER'),
+    MAIL_USERNAME=os.getenv('MAIL_USERNAME'),
+    MAIL_PASSWORD=os.getenv('MAIL_PASSWORD')
 )
-app.config.from_pyfile('application.cfg', silent=False)
 
 sentry = Sentry(app, dsn='https://087db983889944d58e86c47ebe3c2b39:3e9e8fa5af0942ffa70c626a5572328a@sentry.io/305517')
 
