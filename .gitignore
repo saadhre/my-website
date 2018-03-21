@@ -96,5 +96,5 @@ ENV/
 .ropeproject
 logs/
 
-.idea/workspace.xml
+.idea/
 node_modules
