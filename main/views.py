@@ -1,3 +1,4 @@
+import os
 from datetime import date, datetime
 
 from flask import Blueprint, g, redirect, render_template, request, url_for
@@ -28,6 +29,17 @@ def pull_lang_code(endpoint, values):
 def age(birth_date):
     birth_date = datetime.strptime(birth_date, '%Y-%m-%d')
     return int((date.today() - birth_date.date()).days / 365.2425)
+
+
+@app.template_filter('asset')
+def asset(filename):
+    full_path = os.path.join('main/', filename[1:])
+    try:
+        timestamp = str(os.path.getmtime(full_path))
+    except OSError:
+        return filename
+    new_file_name = "{0}?v={1}".format(filename, timestamp)
+    return new_file_name
 
 
 @app.route('/')

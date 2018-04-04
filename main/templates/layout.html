@@ -7,29 +7,33 @@
           content="Jestem programistą pełnego cyklu. Tworzę oprogramowanie od przygotowania specyfikacji do uruchomienia produktu w środowisku produkcyjnym. Projektuję i wdrażam warstwę danych, logikę biznesową aplikacji oraz warstwę prezentacji.">
     <meta name="google-site-verification" content="eG4Lq2r7-tB0ty37vCu1RjP9XCMltPnCOIUIAdE80ZA"/>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css')|asset }}">
 </head>
 <body>
 
 {% from 'macros.html' import home_link, ext_link %}
-{% include 'partial/stack.html' %}
 
-    {% include 'partial/navbar.html' %}
+{% include 'partial/stack.html' %}
+{% include 'partial/navbar.html' %}
 
 {% if self.hero() %}
-<section id="contact-hero" class="hero is-bold is-success" style="">
-    <div class="hero-body">
-        <div class="container">
-            {% block hero %}{% endblock %}
+    <section id="contact-hero" class="hero is-bold is-success" style="">
+        <div class="hero-body">
+            <div class="container">
+                {% block hero %}{% endblock %}
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 {% endif %}
+
 <div class="container">
     {% block content %}{% endblock %}
 </div>
+
 {% include 'partial/footer.html' %}
-<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/app.js')|asset }}"></script>
+
 {% include 'partial/tracking-codes.html' %}
 </body>
 </html>
