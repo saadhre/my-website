@@ -8933,10 +8933,10 @@ article p.is-size-5 {
       background-image: url(/static/img/bulma.png);
       width: 158px;
       height: 73px; }
-    #stack .stack-logo.stack-heroku {
-      background-image: url(/static/img/heroku.png);
+    #stack .stack-logo.stack-nginx {
+      background-image: url(/static/img/nginx.png);
       width: 193px;
-      height: 54px; }
+      height: 44px; }
 
 @media all and (min-width: 1024px) {
   .base-data .image {
