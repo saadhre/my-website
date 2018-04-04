@@ -10,61 +10,7 @@
 <body>
 
 {% from 'macros.html' import home_link, ext_link %}
-
-<div id="stack" class="is-hidden">
-    <div class="container">
-        <div class="level">
-            <div class="level-item">
-                <p class="is-size-5">Build on stack</p>
-            </div>
-        </div>
-        <div class="level">
-            <div class="level-item">
-                <div class="stack-logo stack-flask"></div>
-            </div>
-            <div class="level-item">
-                <span class="icon">
-                    <i class="fa fa-plus">
-
-                    </i>
-                </span>
-            </div>
-            <div class="level-item">
-                <div class="stack-logo stack-sqlalchemy"></div>
-            </div>
-            <div class="level-item">
-                <span class="icon">
-                    <i class="fa fa-plus">
-
-                    </i>
-                </span>
-            </div>
-            <div class="level-item">
-                <div class="stack-logo stack-backbone"></div>
-            </div>
-            <div class="level-item">
-                <span class="icon">
-                    <i class="fa fa-plus">
-
-                    </i>
-                </span>
-            </div>
-            <div class="level-item">
-                <div class="stack-logo stack-bulma"></div>
-            </div>
-            <div class="level-item">
-                <span class="icon">
-                    <i class="fa fa-plus">
-
-                    </i>
-                </span>
-            </div>
-            <div class="level-item">
-                <div class="stack-logo stack-heroku"></div>
-            </div>
-        </div>
-    </div>
-</div>
+{% include 'partial/stack.html' %}
 
 <div class="container">
     {% include 'partial/navbar.html' %}
