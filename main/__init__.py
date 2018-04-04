@@ -4,7 +4,7 @@ import os
 from email import header
 from urllib.parse import urlparse, urlunparse
 
-from flask import Flask, flash, redirect, request
+from flask import Flask, flash, g, redirect, request
 from flask_babel import Babel
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail
@@ -46,6 +46,7 @@ def flash_success(message):
 
 @app.before_request
 def redirect_www():
+    g.DEBUG = True if os.getenv('FLASK_DEBUG') else False
     url_parts = urlparse(request.url)
     if url_parts.netloc == 'www.shatkevich.com':
         url_parts_list = list(url_parts)
