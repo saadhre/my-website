@@ -21,7 +21,8 @@ app.config.update(
     DSN=os.getenv('DATABASE_URL', 'sqlite:///memory'),
     MAIL_SERVER=os.getenv('MAIL_SERVER'),
     MAIL_USERNAME=os.getenv('MAIL_USERNAME'),
-    MAIL_PASSWORD=os.getenv('MAIL_PASSWORD')
+    MAIL_PASSWORD=os.getenv('MAIL_PASSWORD'),
+    GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY')
 )
 
 sentry = Sentry(app, dsn='https://087db983889944d58e86c47ebe3c2b39:3e9e8fa5af0942ffa70c626a5572328a@sentry.io/305517')
@@ -46,7 +47,9 @@ def flash_success(message):
 
 @app.before_request
 def redirect_www():
-    g.DEBUG = True if os.getenv('FLASK_DEBUG') else False
+    g.DEBUG = app.config.get('DEBUG')
+    g.GOOGLE_API_KEY = app.config.get('GOOGLE_API_KEY')
+
     url_parts = urlparse(request.url)
     if url_parts.netloc == 'www.shatkevich.com':
         url_parts_list = list(url_parts)

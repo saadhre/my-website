@@ -73,29 +73,8 @@ article
   p
     margin-bottom: 0
 
-#show-stack
-  border: 1px solid $blue
-  border-radius: 50%
-  display: inline-block
-  width: 32px
-  height: 32px
-  text-align: center
-  margin-right: 1em
-  &.is-active, &:hover
-    background-color: $blue
-    color: $white
-  &:hover
-    .fa
-      @extend .fa-pulse
-  span
-    position: relative
-    left: -0.5px
-    top: 2px
-
 #stack
-  padding: 1rem 0 2rem
-  border-bottom: 1px solid $blue
-  margin-bottom: 1rem
+  padding: 1rem 0
   .stack-logo
     background-size: contain
     background-repeat: no-repeat
@@ -119,6 +98,10 @@ article
       background-image: url(../img/nginx.png)
       width: 193px
       height: 44px
+
+#contact-map
+  background-repeat: no-repeat
+  background-size: cover
 
 @media all and (min-width: $desktop)
   .base-data

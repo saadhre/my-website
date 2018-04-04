@@ -60,3 +60,10 @@
 {% endmacro %}
 
 {% macro ext_link(title, href) %}<a href="{{ href }}" target="_blank" title="{{ title }}">{{ title }}</a>{% endmacro %}
+
+{% macro render_nav_item(item) %}
+    {% set is_active = 'is-active' if current_nav == item.path else '' %}
+    <a href="{{ url_for('front.page', path=item.path) }}" class="navbar-item {{ is_active }}">
+        {{ item.label }}
+    </a>
+{% endmacro %}

@@ -1,4 +1,10 @@
-<nav class="navbar">
+{% set pages = [
+    {'path': 'about-me', 'label': 'O mnie'},
+] %}
+
+{% from 'macros.html' import render_nav_item with context %}
+
+<nav class="navbar is-info">
     <div class="navbar-brand">
         {{ home_link(additional_class='navbar-item') }}
         <div class="navbar-burger">
@@ -9,18 +15,14 @@
     </div>
     <div class="navbar-menu">
         <div class="navbar-start">
-            <a href="{{ url_for('front.page', path='about-me') }}" class="navbar-item">
-                {{ _('O mnie') }}
-            </a>
+            {% for item in pages %}
+                {{ render_nav_item(item) }}
+            {% endfor %}
         </div>
         <div class="navbar-end">
-            <div class="navbar-item">
-                <a href="#" id="show-stack" title="{{ _('Pokaż stack') }}">
-                    <span class="icon">
-                        <i class="fa fa-code"></i>
-                    </span>
-                </a>
-            </div>
+            <a href="#" id="show-stack" class="navbar-item" title="{{ _('Pokaż stack') }}">
+                Stack
+            </a>
             {% include 'partial/current_user.html' %}
         </div>
     </div>

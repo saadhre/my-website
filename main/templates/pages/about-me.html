@@ -1,6 +1,14 @@
 {% extends 'layout.html' %}
 
+{% set current_nav = 'about-me' %}
+
 {% block title %}Yaroslav Shatkevich } Full stack web developer{% endblock %}
+
+{% block hero %}
+    <h1 class="title">{% trans %}Yaroslav Shatkevich{% endtrans %}</h1>
+    <h2 class="subtitle">{% trans %}Full stack web developer{% endtrans %}</h2>
+{% endblock %}
+
 {% block content %}
     <section class="section">
         <div class="columns is-variable is-6">
@@ -9,20 +17,23 @@
             </div>
             <div class="column">
                 <article>
-                    <h1 class="title">{% trans %}Yaroslav Shatkevich{% endtrans %}</h1>
-                    <h2 class="subtitle">{% trans %}Full stack web developer{% endtrans %}</h2>
-
                     <p class="is-size-5">
-                        {% trans %}Od ponad 16 lat zajmuję się programowaniem komercyjnym aplikacji webowych i sieciowych. Brałem udział w tworzeniu ponad 150 rozwiązań i wdrożeń w sektorze B2B. Stworzyłem całą architekturę ponad 80 aplikacji i systemów.{% endtrans %}
+                        {% trans %}Od ponad 16 lat zajmuję się programowaniem komercyjnym aplikacji webowych i sieciowych. Brałem udział w tworzeniu ponad 150 rozwiązań i wdrożeń w sektorze B2B.
+                            Stworzyłem całą architekturę ponad 80 aplikacji i systemów.{% endtrans %}
                     </p>
                     <p class="is-size-5">
-                        {% trans %}Jestem programistą pełnego cyklu. Tworzę oprogramowanie od przygotowania specyfikacji do uruchomienia produktu w środowisku produkcyjnym. Projektuję i wdrażam warstwę danych, logikę biznesową aplikacji oraz warstwę prezentacji. Pomagam klientom przejść przez proces tworzenia aplikacji zarówno webowych jak i mobilnych - od idei do uruchomienia w infrastrukturze AWS albo publikacji w AppStore, Google Play czy Facebook.{% endtrans %}
+                        {% trans %}Jestem programistą pełnego cyklu. Tworzę oprogramowanie od przygotowania specyfikacji do uruchomienia produktu w środowisku produkcyjnym. Projektuję i wdrażam
+                            warstwę danych, logikę biznesową aplikacji oraz warstwę prezentacji. Pomagam klientom przejść przez proces tworzenia aplikacji zarówno webowych jak i mobilnych - od idei do
+                            uruchomienia w infrastrukturze AWS albo publikacji w AppStore, Google Play czy Facebook.{% endtrans %}
                     </p>
                     <p class="is-size-5">
-                        {% trans %}Od 12 lat zarządzam zespołami programistycznymi i technicznymi zarówno w rozproszeniu jak i lokalnie. Potrafię rozmawiać z klientem oraz współpracować z kreatywną częścią zespołu. Jestem ambasadorem pracy zdalnej - umiem pracować w rozproszeniu oraz potrafię zorganizować pracę zdalnego zespołu. Wdrażam pełny stack narzędzi niezbędnych do pracy w zespole rozproszonym: JIRA, Confluence, Basecamp, HipChat/Slack, G&nbsp;Suite.{% endtrans %}
+                        {% trans %}Od 12 lat zarządzam zespołami programistycznymi i technicznymi zarówno w rozproszeniu jak i lokalnie. Potrafię rozmawiać z klientem oraz współpracować z kreatywną
+                            częścią zespołu. Jestem ambasadorem pracy zdalnej - umiem pracować w rozproszeniu oraz potrafię zorganizować pracę zdalnego zespołu. Wdrażam pełny stack narzędzi
+                            niezbędnych do pracy w zespole rozproszonym: JIRA, Confluence, Basecamp, HipChat/Slack, G&nbsp;Suite.{% endtrans %}
                     </p>
                     <p class="is-size-5">
-                        {% trans %}Propaguję CloudComputing i od ponad 7 lat korzystam z platform AWS, Azure, Google Cloud i Heroku. Umiem tworzyć aplikacje rozproszone i rozwiązania serverless.{% endtrans %}
+                        {% trans %}Propaguję CloudComputing i od ponad 7 lat korzystam z platform AWS, Azure, Google Cloud i Heroku. Umiem tworzyć aplikacje rozproszone i rozwiązania
+                            serverless.{% endtrans %}
                     </p>
 
                     {% from 'macros.html' import technology_box %}

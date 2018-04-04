@@ -1,5 +1,7 @@
 {% if g.current_user %}
     <a href="{{ url_for('front.logout') }}" class="navbar-item">{{ _('Wyloguj') }}</a>
 {% else %}
-    <a href="{{ url_for('front.login') }}" class="navbar-item">{{ _('Zaloguj się') }}</a>
+    <a href="{{ url_for('front.login') }}" class="navbar-item {{ 'is-active' if current_nav == 'login' }}">
+        {{ _('Zaloguj się') }}
+    </a>
 {% endif %}
