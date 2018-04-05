@@ -7,8 +7,8 @@ from flask_gravatar import Gravatar
 
 from main import app, flash_error, flash_success
 from main.decorators import auth_required
-from main.forms import AuthForm, ResetPasswordConfirmForm, ResetPasswordForm
-from main.models import Application, AuthModel, InitPasswordResetModel, PasswordResetModel
+from main.forms import AuthForm, ContactForm, ResetPasswordConfirmForm, ResetPasswordForm
+from main.models import Application, AuthModel, ContactModel, InitPasswordResetModel, PasswordResetModel
 
 gravatar = Gravatar(app)
 
@@ -97,6 +97,18 @@ def reset_password_confirm(reset_hash):
         flash_success(gettext(u'Pomyślnie zmieniłeś swoje hasło'))
         return redirect(url_for('front.login'))
     return render_template('auth/reset_password_confirm.html', form=form)
+
+
+@front.route('/contact', methods=['GET', 'POST'])
+def contact():
+    form = ContactForm(request.form)
+    if form.validate_on_submit():
+        model = ContactModel()
+        form.populate_obj(model)
+        model.send()
+        flash_success(gettext(u'Twoja wiadomość została wysłana. Skontaktuję się z Tobą w najbliższym czasie.'))
+        return redirect(url_for('front.contact'))
+    return render_template('pages/contact.html', form=form)
 
 
 @front.route('/<string(minlength=3):path>')

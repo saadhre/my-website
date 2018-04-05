@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import g, render_template, request, session
 from flask_babel import gettext
 from flask_mail import Message
-from sqlalchemy import Column, DateTime, Integer, JSON, SmallInteger, String, and_
+from sqlalchemy import Column, DateTime, Integer, JSON, String, and_
 
 from main import babel, bcrypt, mail
 from main.database import Base, db
@@ -136,4 +136,16 @@ class PasswordResetModel:
 
         message = Message(gettext(u'Zresetowano hasło'), sender='yarik@shatkevich.com', recipients=[user.email])
         message.html = render_template('emails/password_reset_confirmation.html', username=user.username)
+        mail.send(message)
+
+
+class ContactModel:
+    def __init__(self):
+        self.name = None
+        self.email = None
+        self.message = None
+
+    def send(self):
+        message = Message(subject=gettext(u'Nowy kontakt ze strony'), sender='yarik@shatkevich.com', recipients=['yarik@shatkevich.com'])
+        message.html = render_template('emails/contact.html', name=self.name, email=self.email, message=self.message)
         mail.send(message)

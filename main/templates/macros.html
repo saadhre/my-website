@@ -1,4 +1,4 @@
-{% macro field(field, with_label=false, is_large=false, is_autofocus=false, placeholder='', left_icon=false) %}
+{% macro field(field, with_label=false, is_large=false, is_autofocus=false, placeholder='', left_icon=false, rows=false) %}
     <div class="field">
         {{ field.label(class='label') if with_label }}
 

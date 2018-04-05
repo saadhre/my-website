@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% from 'macros.html' import field, button, messages %}
+
+{% set google_maps = 'https://maps.googleapis.com/maps/api/staticmap?center=Święty+Marcin+29/8,+Poznań,Poland&zoom=16&size=636x477&markers=color:green|52.4061155,16.9256062&key=' ~ g.GOOGLE_API_KEY %}
+{% set current_nav = 'contact' %}
+
+{% block title %}Yaroslav Shatkevich } Full stack web developer } Kontakt{% endblock %}
+
+{% block hero %}
+    <h1 class="title">{% trans %}Fully Stacked{% endtrans %}</h1>
+    <h2 class="subtitle">Yaroslav Shatkevich</h2>
+{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="columns">
+            <div class="column">
+                <h2 class="title is-4">Skontaktuj się ze mną</h2>
+                {{ messages() }}
+                <form method="post" action="{{ url_for('front.contact') }}">
+                    {{ form.csrf_token }}
+                    {{ field(form.name, placeholder=_('Twoje imię'), is_autofocus=true, is_large=true) }}
+                    {{ field(form.email, placeholder=_('Adres e-mail'), is_large=true) }}
+                    {{ field(form.message, placeholder=_('Wiadomość'), is_large=true) }}
+                    <p>Twoje dane zostaną wykorzystane wyłącznie do nawiązania kontaktu. Nie będziesz otrzymywał newsletterów ani innych
+                        informacji handlowych.</p>
+                    <hr>
+                    {{ button(label=_('Wyślij wiadomość'), flag='primary', is_large=True) }}
+                </form>
+            </div>
+            <div class="column">
+                <div class="card">
+                    <div class="card-image">
+                        <figure id="contact-map" class="image is-4by3" style="background-image: url({{ google_maps }});">
+
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <h2 class="title is-4">Dane teleadresowe</h2>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <p>Fully Stacked Yaroslav Shatkevich<br>
+                                ul. Święty Marcin 29/8<br>61-806 Poznań</p>
+                            <p>tel.: <a href="tel:+48 535 111 426">+48 535 111 426</a><br>
+                                e-mail: <a href="mailto:yarik@shatkevich.com">yarik@shatkevich.com</a></p>
+                            <p>NIP: 7871820419<br>
+                                REGON: 787454578</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
