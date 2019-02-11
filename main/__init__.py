@@ -22,7 +22,9 @@ app.config.update(
     MAIL_SERVER=os.getenv('MAIL_SERVER'),
     MAIL_USERNAME=os.getenv('MAIL_USERNAME'),
     MAIL_PASSWORD=os.getenv('MAIL_PASSWORD'),
-    GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY')
+    GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY'),
+    RECAPTCHA_SITE_KEY=os.getenv('RECAPTCHA_SITE_KEY'),
+    RECAPTCHA_SERVER_KEY=os.getenv('RECAPTCHA_SERVER_KEY'),
 )
 
 sentry = Sentry(app, dsn='https://087db983889944d58e86c47ebe3c2b39:3e9e8fa5af0942ffa70c626a5572328a@sentry.io/305517')
@@ -49,6 +51,7 @@ def flash_success(message):
 def redirect_www():
     g.DEBUG = app.config.get('DEBUG')
     g.GOOGLE_API_KEY = app.config.get('GOOGLE_API_KEY')
+    g.RECAPTCHA_SITE_KEY = app.config.get('RECAPTCHA_SITE_KEY')
 
     url_parts = urlparse(request.url)
     if url_parts.netloc == 'www.shatkevich.com':
