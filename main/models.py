@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 
 from flask import g, render_template, request, session
-from flask_babel import gettext
+from flask_babel import gettext as _
 from flask_mail import Message
 from sqlalchemy import Column, DateTime, Integer, JSON, String, and_
 
@@ -89,8 +89,7 @@ class AuthModel:
     def auth(self):
         user = db.query(User).filter(and_(User.username == self.username)).one_or_none()
         if user is None or not bcrypt.check_password_hash(user.password, self.password):
-            self.error = gettext(u'Niepoprawne parametry logowania')
-            # log_event(AppEvent.LOGIN_ERROR, dict(username=self.username))
+            self.error = _(u'Niepoprawne parametry logowania')
             return False
         Application.authorize_user(user)
         return True
@@ -100,19 +99,22 @@ class InitPasswordResetModel:
     def __init__(self):
         self.email = None
 
-    def send_reset_request(self):
+    def create_reset_request(self):
         user = db.query(User).filter(User.email == self.email).one_or_none()
 
         if user is not None:
             user.password_reset_hash = uuid.uuid4()
-            db.commit()
-
-            message = Message(subject=gettext(u'Rozpoczęto reset hasła'), sender='yarik@shatkevich.com', recipients=[user.email])
-            message.html = render_template('emails/request_password_reset.html', hash=user.password_reset_hash)
-            mail.send(message)
-
             user.password_reset_sent = datetime.now()
             db.commit()
+            self.send_notification(user)
+
+    @staticmethod
+    def send_notification(user):
+        message = Message(subject=_(u'Rozpoczęto reset hasła'),
+                          sender='yarik@shatkevich.com',
+                          recipients=[user.email])
+        message.html = render_template('emails/request_password_reset.html', hash=user.password_reset_hash)
+        mail.send(message)
 
 
 class PasswordResetModel:
@@ -133,8 +135,11 @@ class PasswordResetModel:
         user.password_reset_hash = None
         user.password_reset_sent = None
         db.commit()
+        self.send_notification(user)
 
-        message = Message(gettext(u'Zresetowano hasło'), sender='yarik@shatkevich.com', recipients=[user.email])
+    @staticmethod
+    def send_notification(user):
+        message = Message(_(u'Zresetowano hasło'), sender='yarik@shatkevich.com', recipients=[user.email])
         message.html = render_template('emails/password_reset_confirmation.html', username=user.username)
         mail.send(message)
 
@@ -146,6 +151,8 @@ class ContactModel:
         self.message = None
 
     def send(self):
-        message = Message(subject=gettext(u'Nowy kontakt ze strony'), sender='yarik@shatkevich.com', recipients=['yarik@shatkevich.com'])
+        message = Message(subject=_(u'Nowy kontakt ze strony'),
+                          sender='yarik@shatkevich.com',
+                          recipients=['yarik@shatkevich.com'])
         message.html = render_template('emails/contact.html', name=self.name, email=self.email, message=self.message)
         mail.send(message)

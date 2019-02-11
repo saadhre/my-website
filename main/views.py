@@ -78,8 +78,9 @@ def reset_password():
     if form.validate_on_submit():
         view_model = InitPasswordResetModel()
         form.populate_obj(view_model)
-        view_model.send_reset_request()
-        flash_success(gettext(u'Jeżeli wprowadziłeś poprawny adres to za chwilę otrzymasz e-maila z dalszymi instrukcjami'))
+        view_model.create_reset_request()
+        flash_success(
+            gettext(u'Jeżeli wprowadziłeś poprawny adres to za chwilę otrzymasz e-maila z dalszymi instrukcjami'))
         return redirect(url_for('front.login'))
     return render_template('auth/reset_password.html', form=form)
 
