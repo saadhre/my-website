@@ -1,0 +1,27 @@
+:root {
+  --font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
+
+  --color-brand: #209cee;
+  --color-alternative: #00b124;
+
+  --transition-color: color 200ms ease-out;
+}
+
+body {
+  font-family: var(--font-family);
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+a, a:visited {
+  color: var(--color-brand);
+  transition: var(--transition-color);
+  text-decoration-style: dotted;
+  text-underline-position: under;
+}
+
+a:hover {
+  color: var(--color-alternative);
+}

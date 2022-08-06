@@ -1,8 +1,0 @@
-{% extends 'emails/layout.html' %}
-
-{% block title %}{% trans %}Nowy kontakt ze strony{% endtrans %}{% endblock %}
-
-{% block content %}
-    <p>Od: {{ name }} [{{ email }}]</p>
-    <p>Wiadomość:<br>{{ message }}</p>
-{% endblock %}
