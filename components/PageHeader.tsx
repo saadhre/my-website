@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 import { Avatar } from "./Avatar";
 import { IconsList } from "./IconsList";
-import { CompanyLogo } from "./CompanyLogo";
 
 export const PageHeader = styled.div`
   display: grid;
@@ -12,8 +11,11 @@ export const PageHeader = styled.div`
     margin-top: 1.5em;
   }
 
-  ${CompanyLogo} {
+  .right-part {
     grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    row-gap: .8em;
   }
 
   @media (min-width: 768px) {
@@ -28,7 +30,7 @@ export const PageHeader = styled.div`
       margin-top: 1em;
     }
 
-    ${CompanyLogo} {
+    .right-part {
       grid-column: 3;
       text-align: right;
     }

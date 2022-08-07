@@ -1,16 +1,17 @@
-import type { NextPage } from 'next'
+import type { NextPage, NextPageContext } from 'next'
 import type { ResponsiveImageType, TitleMetaLinkTag } from "react-datocms";
-import { renderMetaTags } from "react-datocms";
 import type { ApiConnectedPage, Titled } from "../lib/types";
 import type { SocialMedium } from "../components/SocialMediaIcon";
-import { SocialMediaIcon } from "../components/SocialMediaIcon";
 
 import React from "react";
-import Head from "next/head";
+import { renderMetaTags } from "react-datocms";
 import styled from "styled-components";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLink } from "@fortawesome/free-solid-svg-icons/faExternalLink";
+import Head from "next/head";
+import { Trans } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { request } from "../lib/datocms";
 import { HOMEPAGE_QUERY } from "../lib/queries";
@@ -27,6 +28,9 @@ import { IconsList } from "../components/IconsList";
 import { CompanyData } from "../components/CompanyData";
 import { CompanyLogo } from "../components/CompanyLogo";
 import { ViewSource } from "../components/ViewSource";
+import { SocialMediaIcon } from "../components/SocialMediaIcon";
+import { LanguageSelector } from "../components/LanguageSelector";
+import { opacityTransition } from "../styles/transitions";
 
 library.add(faExternalLink);
 
@@ -47,14 +51,14 @@ const TechnologyLink = styled.a`
   display: inline-flex;
   align-items: center;
   column-gap: .1em;
-  
+
   svg {
     width: 0.7em;
     height: 0.7em;
     opacity: .6;
-    transition: opacity var(--transition);
+    ${opacityTransition}
   }
-  
+
   &:hover svg {
     opacity: 1;
   }
@@ -83,7 +87,7 @@ export const ContactData = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2em;
-  
+
   @media (min-width: 768px) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -94,6 +98,13 @@ export const ContactData = styled.div`
 export interface Location {
   latitude: string;
   longitude: string;
+}
+
+export interface SiteData {
+  site: {
+    favicon: TitleMetaLinkTag[];
+    locales: string[];
+  }
 }
 
 export interface Homepage {
@@ -118,12 +129,9 @@ export interface Homepage {
     vatId: string;
     _seoMetaTags: TitleMetaLinkTag[];
   }
-  site?: {
-    favicon: TitleMetaLinkTag[];
-  }
 }
 
-const Home: NextPage<ApiConnectedPage<Homepage>> = ({ data: { homepage, site } }) => {
+const Home: NextPage<ApiConnectedPage<Homepage & SiteData>> = ({ data: { homepage, site } }) => {
   const { fullname, job, photo, languages, technologies, socialMedia, description, _seoMetaTags } = homepage
 
   const experience = () => new Date().getFullYear() - 2001;
@@ -141,17 +149,26 @@ const Home: NextPage<ApiConnectedPage<Homepage>> = ({ data: { homepage, site } }
         <div>
           <PageTitle>{fullname}</PageTitle>
           <PageSubtitle>{job}</PageSubtitle>
-          <p>Ponad {experience()} lat doświadczenia</p>
+          <p>
+            <Trans
+              i18nKey="experience"
+              defaults="Ponad {{years}} lat doświadczenia"
+              values={{ years: experience() }}
+            />
+          </p>
           <IconsList>
             {socialMedia.map((medium, index) => (
               <SocialMediaIcon key={`Medium-${index}`} {...medium} />
             ))}
           </IconsList>
         </div>
-        <CompanyLogo>
-          Fully/:
-          <strong>Stack☰d</strong>
-        </CompanyLogo>
+        <div className="right-part">
+          <CompanyLogo>
+            Fully/:
+            <strong>Stack☰d</strong>
+          </CompanyLogo>
+          <LanguageSelector />
+        </div>
       </PageHeader>
       <Richtext dangerouslySetInnerHTML={{ __html: description }} />
       {technologies.map((value, index) => (
@@ -166,14 +183,19 @@ const Home: NextPage<ApiConnectedPage<Homepage>> = ({ data: { homepage, site } }
   )
 }
 
-export async function getStaticProps() {
+export async function getStaticProps(context: NextPageContext) {
+  const currenLocale = context.locale || 'pl';
+
   const data = await request({
-    query: HOMEPAGE_QUERY,
+    query: HOMEPAGE_QUERY.replace(/:locale:/g, currenLocale),
     variables: { limit: 10 }
   });
 
   return {
-    props: { data }
+    props: {
+      data,
+      ...await serverSideTranslations(currenLocale, ['common'])
+    }
   };
 }
 

@@ -7,3 +7,7 @@ export const colorTransition = css`
 export const backgroundColorTransition = css`
   transition: background-color var(--transition);
 `;
+
+export const opacityTransition = css`
+  transition: opacity var(--transition);
+`;

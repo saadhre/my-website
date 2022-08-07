@@ -1,6 +1,7 @@
 import type { FieldError, SubmitHandler } from "react-hook-form";
 
 import React from "react";
+import { Trans, useTranslation } from "next-i18next";
 import styled from "styled-components";
 import axios from "axios";
 import * as yup from "yup";
@@ -51,6 +52,7 @@ export interface ContactFormInputs {
 }
 
 export const ContactForm: React.FC<ContactFormProps> = ({ languages }) => {
+  const { t } = useTranslation();
   const [working, setWorking] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState("");
@@ -65,7 +67,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ languages }) => {
     axios.post('/api/process-contact', data).then(() => {
       setSuccess(true);
     }).catch(reason => {
-      setError(`Ups, coś się popsuło 😢 Spróbuj jeszcze raz. Kod błędu: ${reason.response.status}`);
+      setError(t('errorContactProcessing', 'Ups, coś się popsuło 😢 Spróbuj jeszcze raz. Kod błędu: {{code}}', { code: reason.response.status }));
     }).finally(() => {
       setWorking(false);
     });
@@ -73,38 +75,70 @@ export const ContactForm: React.FC<ContactFormProps> = ({ languages }) => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <SectionTitle variant="h2">Kontakt</SectionTitle>
+      <SectionTitle variant="h2">
+        <Trans
+          i18nKey="contactFormTitle"
+          defaults="Kontakt"
+        />
+      </SectionTitle>
       <fieldset disabled={working || success}>
         <FormField>
-          <label htmlFor="name">Twoje imię</label>
-          <input id="name" placeholder="Miło Ciebie poznać 🙂" {...register('name')} />
+          <label htmlFor="name">
+            <Trans
+              i18nKey="contactFormYourName"
+              defaults="Twoje imię"
+            />
+          </label>
+          <input id="name" placeholder={t('greeting', 'Miło Ciebie poznać 🙂')} {...register('name')} />
           <FieldError error={errors.name} />
         </FormField>
         <FormField>
-          <label htmlFor="email">E-mail</label>
+          <label htmlFor="email">
+            E-mail
+          </label>
           <input id="email" {...register('email')} />
           <FieldError error={errors.email} />
         </FormField>
         <FormField>
-          <label htmlFor="message">Wiadomość</label>
+          <label htmlFor="message">
+            <Trans
+              i18nKey="contactFormMessage"
+              defaults="Wiadomość"
+            />
+          </label>
           <textarea id="message" {...register('message')} />
           <FieldError error={errors.message} />
         </FormField>
       </fieldset>
       <Disclaimer>
-        Twoje dane zostaną wykorzystane wyłącznie do nawiązania kontaktu. Nie będziesz otrzymywał newsletterów ani
-        innych informacji handlowych.
+        <Trans i18nKey="contactFormDisclaimer">
+          Twoje dane zostaną wykorzystane wyłącznie do nawiązania kontaktu. Nie będziesz otrzymywał newsletterów ani
+          innych informacji handlowych.
+        </Trans>
       </Disclaimer>
       <Disclaimer>
-        Możesz porozmawiać w następujących językach:
+        <Trans
+          i18nKey="contactFormLanguages"
+          defaults="Możesz porozmawiać w następujących językach:"
+        />
         {' '}
         {languages}
       </Disclaimer>
       <SubmitButton type="submit" disabled={working || success}>
-        Wyślij wiadomość
+        <Trans
+          i18nKey="contactFormSubmit"
+          defaults="Wyślij wiadomość"
+        />
       </SubmitButton>
       {error && !success && <FormError error={{ message: error }} />}
-      {success && <SuccessMessage>Dziękuję 🙂 Odpowiem ASAP.</SuccessMessage>}
+      {success && (
+        <SuccessMessage>
+          <Trans
+            i18nKey="contactFormSuccess"
+            defaults="Dziękuję 🙂 Odpowiem ASAP."
+          />
+        </SuccessMessage>
+      )}
     </Form>
   );
 };

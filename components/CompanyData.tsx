@@ -1,6 +1,7 @@
 import type { Homepage } from "../pages";
 
 import React, { useCallback } from "react";
+import { Trans } from "next-i18next";
 import styled from "styled-components";
 import { Wrapper } from "@googlemaps/react-wrapper";
 
@@ -62,6 +63,7 @@ export const CompanyLocationMap: React.FC<CompanyLocationMapProps> = ({ latitude
     </MapContainer>
   );
 };
+
 const Address = styled.address`
   font-style: normal;
 
@@ -69,6 +71,7 @@ const Address = styled.address`
     font-size: 1.1em;
   }
 `;
+
 const CompanyDataSections = styled.div`
   display: flex;
   flex-direction: column;
@@ -78,16 +81,21 @@ const CompanyDataSections = styled.div`
     line-height: 1.4;
   }
 `;
+
 export const CompanyData: React.FC<Homepage> = (props) => {
   const { companyLocation, companyName, street, postalCode, city, phone, contactEmail, vatId, regon } = props.homepage;
+  const mapApiKey = String(process.env.NEXT_PUBLIC_GOOGLE_API_KEY);
 
   const rawPhone = () => phone.split(' ').join('').substring(1);
 
-  const mapApiKey = String(process.env.NEXT_PUBLIC_GOOGLE_API_KEY);
-
   return (
     <div>
-      <SectionTitle>Dane adresowe</SectionTitle>
+      <SectionTitle>
+        <Trans
+          i18nKey="addressData"
+          defaults="Dane adresowe"
+        />
+      </SectionTitle>
       <Wrapper apiKey={mapApiKey}>
         <CompanyDataSections>
           <CompanyLocationMap {...companyLocation} />
@@ -100,9 +108,16 @@ export const CompanyData: React.FC<Homepage> = (props) => {
             </p>
           </Address>
           <div>
-            tel. <a href={`tel:${rawPhone()}`}>{phone}</a>
+            <Trans
+              i18nKey="phone"
+              defaults="tel."
+            />
+            {': '}
+            <a href={`tel:${rawPhone()}`}>{phone}</a>
             <br />
-            e-mail. <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+            e-mail
+            {': '}
+            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
           </div>
           <div>
             NIP: {vatId}

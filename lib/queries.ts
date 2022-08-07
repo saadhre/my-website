@@ -6,7 +6,7 @@ export const HOMEPAGE_QUERY = `query MyQuery {
       tag
     }
   }
-  homepage {
+  homepage(locale: :locale:) {
     fullname
     job
     description
