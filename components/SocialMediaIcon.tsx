@@ -6,12 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { IconLink } from "./IconLink";
 
-export interface SocialMedium extends Titled {
+export interface SocialMediaIconProps extends Titled {
   profileUrl: string;
   icon: IconProp;
 }
 
-export const SocialMediaIcon: React.FC<SocialMedium> = ({ icon, profileUrl }) => (
+export const SocialMediaIcon: React.FC<SocialMediaIconProps> = ({ icon, profileUrl }) => (
   <IconLink href={profileUrl} target="_blank" rel="noreferrer nofollow">
     <FontAwesomeIcon icon={icon} />
   </IconLink>

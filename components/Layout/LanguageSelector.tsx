@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-import { opacityTransition } from "../styles/transitions";
+import { opacityTransition } from "../../styles/transitions";
 
 const Language = styled.a`
   color: var(--color-white) !important;

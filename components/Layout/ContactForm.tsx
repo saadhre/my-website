@@ -1,45 +1,17 @@
-import type { FieldError, SubmitHandler } from "react-hook-form";
-
 import React from "react";
 import { Trans, useTranslation } from "next-i18next";
-import styled from "styled-components";
 import axios from "axios";
+import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { pl } from "yup-locales";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { ContactFormValidationSchema } from "../lib/schemas";
+import { ContactFormValidationSchema } from "../../lib/schemas";
 
-import { Form } from "./Form";
-import { FormField } from "./FormField";
-import { Disclaimer } from "./Disclaimer";
-import { SubmitButton } from "./SubmitButton";
-import { ErrorMessage } from "./ErrorMessage";
-import { SectionTitle } from "./SectionTitle";
+import { Disclaimer, Form, FormError, FormField, FormFieldError, SubmitButton, SuccessMessage } from "../Form";
+import { SectionTitle } from "../SectionTitle";
 
 yup.setLocale(pl);
-
-interface FieldErrorProps {
-  error?: FieldError | { message: string }
-}
-
-const FieldError: React.FC<FieldErrorProps> = ({ error }) => {
-  if (!error) return null;
-
-  return <ErrorMessage>{error.message}</ErrorMessage>;
-}
-
-const FormError: React.FC<FieldErrorProps> = ({ error }) => {
-  if (!error) return null;
-
-  return <ErrorMessage style={{ margin: "1.5em 0", fontSize: "1em" }}>{error.message}</ErrorMessage>;
-};
-
-const SuccessMessage = styled.p`
-  color: green;
-  margin: 1.5em 0;
-`;
 
 export interface ContactFormProps {
   languages: string;
@@ -90,14 +62,14 @@ export const ContactForm: React.FC<ContactFormProps> = ({ languages }) => {
             />
           </label>
           <input id="name" placeholder={t('greeting', 'Miło Ciebie poznać 🙂')} {...register('name')} />
-          <FieldError error={errors.name} />
+          <FormFieldError error={errors.name} />
         </FormField>
         <FormField>
           <label htmlFor="email">
             E-mail
           </label>
           <input id="email" {...register('email')} />
-          <FieldError error={errors.email} />
+          <FormFieldError error={errors.email} />
         </FormField>
         <FormField>
           <label htmlFor="message">
@@ -107,7 +79,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ languages }) => {
             />
           </label>
           <textarea id="message" {...register('message')} />
-          <FieldError error={errors.message} />
+          <FormFieldError error={errors.message} />
         </FormField>
       </fieldset>
       <Disclaimer>

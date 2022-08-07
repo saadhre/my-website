@@ -1,11 +1,7 @@
 import React from "react";
 import { Trans } from "next-i18next";
 import styled from "styled-components";
-import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCode } from "@fortawesome/free-solid-svg-icons/faCode";
-
-library.add(faCode);
 
 const Link = styled.a`
   display: flex;

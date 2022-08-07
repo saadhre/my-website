@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { backgroundColorTransition } from "../styles/transitions";
+import { backgroundColorTransition } from "../../styles/transitions";
 
 export const SubmitButton = styled.button`
   font-size: 1.2em;
