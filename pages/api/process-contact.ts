@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { ContactFormInputs } from "../../components/ContactForm";
+import type { ContactFormInputs } from "../../components/Layout";
 
 import * as mailer from "nodemailer";
 

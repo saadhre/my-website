@@ -6,7 +6,7 @@ export const HOMEPAGE_QUERY = `query MyQuery {
       tag
     }
   }
-  homepage {
+  homepage(locale: :locale:) {
     fullname
     job
     description
@@ -18,7 +18,7 @@ export const HOMEPAGE_QUERY = `query MyQuery {
     }
     photo {
       responsiveImage(
-          imgixParams: { fit: crop, w: 150, h: 150, auto: format }
+          imgixParams: { fit: crop, w: 175, h: 175, auto: format }
         ) {
           srcSet
           webpSrcSet

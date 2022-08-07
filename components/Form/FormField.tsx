@@ -16,6 +16,15 @@ export const FormField = styled.div`
     padding: 1em;
     font-family: var(--font-family);
     font-size: 1.2em;
+    appearance: none;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 2px 0 var(--color-brand);
+      border-color: var(--color-brand);
+    }
   }
   
   > textarea {

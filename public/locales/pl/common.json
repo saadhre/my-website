@@ -1,0 +1,15 @@
+{
+  "addressData": "Dane adresowe",
+  "contactFormDisclaimer": "Twoje dane zostaną wykorzystane wyłącznie do nawiązania kontaktu. Nie będziesz otrzymywał newsletterów ani innych informacji handlowych.",
+  "contactFormLanguages": "Możesz porozmawiać w następujących językach:",
+  "contactFormMessage": "Wiadomość",
+  "contactFormSubmit": "Wyślij wiadomość",
+  "contactFormSuccess": "Dziękuję 🙂 Odpowiem ASAP.",
+  "contactFormTitle": "Kontakt",
+  "contactFormYourName": "Twoje imię",
+  "errorContactProcessing": "Ups, coś się popsuło 😢 Spróbuj jeszcze raz. Kod błędu: {{code}}",
+  "experience": "Ponad {{years}} lat doświadczenia",
+  "greeting": "Miło Ciebie poznać 🙂",
+  "phone": "tel.",
+  "viewSource": "Zobacz kod tej strony"
+}

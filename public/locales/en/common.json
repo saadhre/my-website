@@ -1,0 +1,15 @@
+{
+  "addressData": "Address",
+  "contactFormDisclaimer": "Your data will be used only to establish contact. You will not receive newsletters or other commercial information.",
+  "contactFormLanguages": "You can talk in the following languages:",
+  "contactFormMessage": "Message",
+  "contactFormSubmit": "Send message",
+  "contactFormSuccess": "Thank you 🙂 I'll respond ASAP.",
+  "contactFormTitle": "Contact",
+  "contactFormYourName": "Your name",
+  "errorContactProcessing": "Oops, something is broken 😢 Try again later. Error code: {{code}}",
+  "experience": "Over {{years}} years of experience",
+  "greeting": "Nice to meet you 🙂",
+  "phone": "mobile",
+  "viewSource": "View source code of this page"
+}
