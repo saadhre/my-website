@@ -77,7 +77,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ languages }) => {
       <fieldset disabled={working || success}>
         <FormField>
           <label htmlFor="name">Twoje imię</label>
-          <input id="name" {...register('name')} />
+          <input id="name" placeholder="Miło Ciebie poznać 🙂" {...register('name')} />
           <FieldError error={errors.name} />
         </FormField>
         <FormField>

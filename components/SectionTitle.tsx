@@ -1,16 +1,12 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-const sharedStyles = css`
+export const H2Title = styled.h2`
   margin-bottom: 0.7em;
 `;
 
-export const H2Title = styled.h2`
-  ${sharedStyles}
-`;
-
 export const H3Title = styled.h3`
-  ${sharedStyles}
+  margin-bottom: 0.5em;
 `;
 
 interface SectionTitleProps {

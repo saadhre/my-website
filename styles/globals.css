@@ -3,12 +3,19 @@
 
   --color-brand: #209cee;
   --color-alternative: #00b124;
+  --color-white: #ffffff;
+  --color-text: #222;
+  --color-text-grey: #777;
+  --color-border: #888;
 
-  --transition-color: color 200ms ease-out;
+  --transition: 250ms ease-out;
+  --border-radius: 5px;
 }
 
 body {
   font-family: var(--font-family);
+  font-size: 1.2em;
+  color: var(--color-text);
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -17,9 +24,8 @@ h1, h2, h3, h4, h5, h6, p {
 
 a, a:visited {
   color: var(--color-brand);
-  transition: var(--transition-color);
+  transition: color var(--transition);
   text-decoration-style: dotted;
-  text-underline-position: under;
 }
 
 a:hover {

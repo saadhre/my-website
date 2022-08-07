@@ -8,6 +8,9 @@ import { SocialMediaIcon } from "../components/SocialMediaIcon";
 import React from "react";
 import Head from "next/head";
 import styled from "styled-components";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExternalLink } from "@fortawesome/free-solid-svg-icons/faExternalLink";
 
 import { request } from "../lib/datocms";
 import { HOMEPAGE_QUERY } from "../lib/queries";
@@ -25,6 +28,8 @@ import { CompanyData } from "../components/CompanyData";
 import { CompanyLogo } from "../components/CompanyLogo";
 import { ViewSource } from "../components/ViewSource";
 
+library.add(faExternalLink);
+
 export interface Technology extends Titled {
   url: string;
 }
@@ -33,18 +38,44 @@ export interface TechnologiesGroup extends Titled {
   technologies: Technology[];
 }
 
+const TechnologiesGroupWrapper = styled.div`
+  line-height: 1.4;
+  max-width: 750px;
+`;
+
+const TechnologyLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  column-gap: .1em;
+  
+  svg {
+    width: 0.7em;
+    height: 0.7em;
+    opacity: .6;
+    transition: opacity var(--transition);
+  }
+  
+  &:hover svg {
+    opacity: 1;
+  }
+`;
+
 const TechnologiesGroup: React.FC<TechnologiesGroup> = (props) => {
   const renderItems = () => {
     const items = props.technologies.map<React.ReactNode>(({ url, title }, index) =>
-      <a key={`Link-${index}`} href={url} target="_blank" rel="noreferrer nofollow">{title}</a>);
+      <TechnologyLink key={`Link-${index}`} href={url} target="_blank" rel="noreferrer nofollow">
+        {title}
+        <FontAwesomeIcon icon="external-link" />
+      </TechnologyLink>
+    );
     return items.reduce((previousValue, currentValue) => [previousValue, ', ', currentValue]);
   };
 
   return (
-    <div>
+    <TechnologiesGroupWrapper>
       <SectionTitle variant="h3">{props.title}</SectionTitle>
       {renderItems()}
-    </div>
+    </TechnologiesGroupWrapper>
   );
 }
 

@@ -1,15 +1,14 @@
 import styled from "styled-components";
 
+import { colorTransition } from "../styles/transitions";
+
 export const CompanyLogo = styled.div`
-  font-size: 3em;
+  font-size: 2.4em;
   color: var(--color-alternative);
-  //align-self: flex-start;
-  //flex: 1;
-  //text-align: right;
   cursor: pointer;
 
   &:hover {
+    ${colorTransition};
     color: var(--color-brand);
-    transition: var(--transition-color);
   }
 `;

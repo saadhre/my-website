@@ -18,7 +18,7 @@ export const PageHeader = styled.div`
 
   @media (min-width: 768px) {
     grid-template-columns: 150px 1fr 1fr;
-    grid-column-gap: 2em;
+    grid-column-gap: 3em;
 
     ${Avatar} {
       margin-bottom: 0;
