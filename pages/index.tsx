@@ -19,8 +19,10 @@ import {
   ViewSource
 } from "../components/Layout";
 import { Richtext } from "../components/Richtext";
+import { NextApiRequest } from "next/dist/shared/lib/utils";
+import { PreviewModeIndicator } from "../components/previewModeIndicator";
 
-const Home: NextPage<ApiConnectedPage<Homepage & SiteData>> = ({ data: { homepage, site } }) => {
+const Home: NextPage<ApiConnectedPage<Homepage & SiteData>> = ({ isPreviewMode, data: { homepage, site } }) => {
   const { languages, technologies, description, _seoMetaTags } = homepage
 
   const renderMeta = () => {
@@ -46,20 +48,24 @@ const Home: NextPage<ApiConnectedPage<Homepage & SiteData>> = ({ data: { homepag
       </Footer>
 
       <ViewSource />
+      {isPreviewMode && <PreviewModeIndicator />}
     </Layout>
   )
 }
 
-export async function getStaticProps(context: NextPageContext) {
+export async function getStaticProps(context: NextPageContext & NextApiRequest) {
   const currenLocale = context.locale || 'pl';
+  const isPreviewMode = !!context.preview;
 
   const data = await request({
     query: HOMEPAGE_QUERY.replace(/:locale:/g, currenLocale),
-    variables: { limit: 10 }
+    variables: { limit: 10 },
+    includeDrafts: isPreviewMode,
   });
 
   return {
     props: {
+      isPreviewMode,
       data,
       ...await serverSideTranslations(currenLocale, ['common'])
     }

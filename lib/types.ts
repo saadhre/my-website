@@ -9,6 +9,7 @@ export interface Titled {
 }
 
 export interface ApiConnectedPage<T> {
+  isPreviewMode: boolean;
   data: T;
 }
 
