@@ -3,12 +3,9 @@ import type { ContactFormInputs } from "../../components/Layout";
 
 import * as mailer from "nodemailer";
 
-import { ContactFormValidationSchema } from "../../lib/schemas";
+import { ContactFormValidationSchema } from "../../lib/api";
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") res.status(405).json("Method not allowed");
 
   const data = req.body as ContactFormInputs;

@@ -1,11 +1,11 @@
-import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React from "react";
 import styled from "styled-components";
 
 import { opacityTransition } from "../../styles/transitions";
 
-const Language = styled.a`
+const Language = styled.span`
   color: var(--color-white) !important;
   background-color: var(--color-brand);
   padding: .1em .3em;

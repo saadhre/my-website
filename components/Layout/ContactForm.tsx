@@ -1,12 +1,12 @@
-import React from "react";
-import { Trans, useTranslation } from "next-i18next";
+import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
+import { Trans, useTranslation } from "next-i18next";
+import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { pl } from "yup-locales";
-import { yupResolver } from "@hookform/resolvers/yup";
 
-import { ContactFormValidationSchema } from "../../lib/schemas";
+import { ContactFormValidationSchema } from "../../lib/api";
 
 import { Disclaimer, Form, FormError, FormField, FormFieldError, SubmitButton, SuccessMessage } from "../Form";
 import { SectionTitle } from "../SectionTitle";
