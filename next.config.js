@@ -5,6 +5,12 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   i18n,
+  images: {
+    remotePatterns: [
+      { hostname: 'localhost' },
+      { hostname: 'api.shatkevich.dev' },
+    ]
+  }
 }
 
 module.exports = nextConfig

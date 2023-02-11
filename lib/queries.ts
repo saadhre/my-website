@@ -1,62 +1,81 @@
-export const HOMEPAGE_QUERY = `query MyQuery {
-  site: _site {
-    favicon: faviconMetaTags {
-      attributes
-      content
-      tag
-    }
-  }
-  homepage(locale: :locale:) {
-    fullname
-    job
-    description
-    languages
-    socialMedia {
-      title
-      profileUrl
-      icon
-    }
-    photo {
-      responsiveImage(
-          imgixParams: { fit: crop, w: 175, h: 175, auto: format }
-        ) {
-          srcSet
-          webpSrcSet
-          sizes
-          src
-          width
-          height
-          aspectRatio
-          alt
-          title
-          bgColor
-          base64
-        }
-    }
-    technologies {
-      title
-      technologies {
-        title
+import { gql } from "graphql-request";
+
+const FRAGMENT_IMAGE = gql`
+  fragment Image on UploadFileEntityResponse {
+    data {
+      attributes {
         url
+        previewUrl
+        width
+        height
+        alternativeText
+        formats
       }
     }
-    companyName
-    contactEmail
-    city
-    companyLocation {
-      latitude
-      longitude
-    }
-    phone
-    postalCode
-    regon
-    street
-    vatId
-    _seoMetaTags {
-      attributes
-      content
-      tag
+  }
+`;
+
+export const QUERY_PERSONAL_DATA = gql`
+  query GetPersonalData($locale: I18NLocaleCode) {
+    personalData(locale: $locale) {
+      data {
+        attributes {
+          fullName
+          languages
+          job
+          companyName
+          street
+          postalCode
+          city
+          vatId
+          regon
+          contactEmail
+          phone
+          latLng
+          socialMedia {
+            title
+            profileUrl
+            icon {
+              ...Image
+            }
+          }
+          photo {
+            ...Image
+          }
+        }
+      }
     }
   }
-}
+  
+  ${FRAGMENT_IMAGE}
 `
+
+export const QUERY_HOMEPAGE = gql`
+  query GetHomepage($locale: I18NLocaleCode) {
+    homepage(locale: $locale) {
+      data {
+        attributes {
+          locale
+          description
+          technologyGroups {
+            title
+            technologies {
+              title
+              url
+            }
+          }
+          seo {
+            title
+            description
+            keywords
+            ogImage {
+              ...Image
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  ${FRAGMENT_IMAGE}
+`;

@@ -1,13 +1,13 @@
-import type { Homepage } from "../../lib/types";
+import type { ApiPersonalData } from "../../schemas";
 
 import React from "react";
 import styled from "styled-components";
 
 import { IconsList } from "../IconsList";
+import { StrapiImage } from "../StrapiImage";
 
-import { Avatar } from "./Avatar";
-import { HeaderMiddle } from "./HeaderMiddle";
 import { CompanyLogo } from "./CompanyLogo";
+import { HeaderMiddle } from "./HeaderMiddle";
 import { LanguageSelector } from "./LanguageSelector";
 
 const Wrapper = styled.div`
@@ -29,10 +29,6 @@ const Wrapper = styled.div`
     grid-template-columns: 150px 1fr 1fr;
     grid-column-gap: 3em;
 
-    ${Avatar} {
-      margin-bottom: 0;
-    }
-
     ${IconsList} {
       margin-top: 1em;
     }
@@ -44,13 +40,17 @@ const Wrapper = styled.div`
   }
 `;
 
-export const PageHeader: React.FC<Homepage> = ({ homepage }) => {
-  const { photo } = homepage
+interface PageHeaderProps {
+  personalData: ApiPersonalData;
+}
+
+export const PageHeader: React.FC<PageHeaderProps> = ({ personalData }) => {
+  const { attributes: { photo } } = personalData;
 
   return (
     <Wrapper>
-      <Avatar data={photo.responsiveImage} />
-      <HeaderMiddle homepage={homepage} />
+      <StrapiImage media={photo} priority format="thumbnail" />
+      <HeaderMiddle personalData={personalData} />
       <div className="right-part">
         <CompanyLogo />
         <LanguageSelector />

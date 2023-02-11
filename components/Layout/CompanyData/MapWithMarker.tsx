@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 import { Marker } from "./Marker";
 
-export interface MapWithMarkerProps {
-  latitude: string;
-  longitude: string;
+const parsePosition = (position: string) => {
+  const [latitude, longitude] = position.split(',');
+  return new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude));
 }
 
 const Wrapper = styled.div`
@@ -13,25 +13,30 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-export const MapWithMarker: React.FC<MapWithMarkerProps> = ({ latitude, longitude }) => {
+export interface MapWithMarkerProps {
+  position: string;
+}
+
+export const MapWithMarker: React.FC<MapWithMarkerProps> = ({ position }) => {
   const [map, setMap] = React.useState<google.maps.Map>();
   const mapRef = React.useRef<HTMLDivElement>(null);
 
-  const getPosition = React.useCallback(() =>
-    new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude)), [latitude, longitude]);
-
   React.useEffect(() => {
-    if (mapRef.current && !map) {
+    if (mapRef.current && !map && position) {
       setMap(new window.google.maps.Map(mapRef.current, {
-        center: getPosition(),
+        center: parsePosition(position),
         zoom: 16,
       }));
     }
-  }, [mapRef, map, getPosition]);
+  }, [mapRef, map, position]);
+
+  if (!position) {
+    return null;
+  }
 
   return (
     <Wrapper ref={mapRef}>
-      <Marker position={getPosition()} map={map} />
+      <Marker position={parsePosition(position)} map={map} />
     </Wrapper>
   );
 };

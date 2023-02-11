@@ -1,18 +1,12 @@
-import type { Titled } from "../../lib/types";
+import type { ApiTechnologyGroup } from "../../schemas";
 
 import React from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { opacityTransition } from "../../styles/transitions";
 import { SectionTitle } from "../SectionTitle";
 
-export interface Technology extends Titled {
-  url: string;
-}
-
-export interface TechnologiesGroupProps extends Titled {
-  technologies: Technology[];
+interface TechnologiesGroupProps {
+  group: ApiTechnologyGroup;
 }
 
 const Wrapper = styled.div`
@@ -24,25 +18,18 @@ const Link = styled.a`
   display: inline-flex;
   align-items: center;
   column-gap: .1em;
-
-  svg {
-    width: 0.7em;
-    height: 0.7em;
-    opacity: .6;
-    ${opacityTransition}
-  }
-
-  &:hover svg {
-    opacity: 1;
-  }
 `;
 
-export const TechnologiesGroup: React.FC<TechnologiesGroupProps> = (props) => {
+export const TechnologiesGroup: React.FC<TechnologiesGroupProps> = ({ group }) => {
+  const { technologies, title } = group;
+
   const renderItems = () => {
-    const items = props.technologies.map<React.ReactNode>(({ url, title }, index) =>
-      <Link key={`Link-${index}`} href={url} target="_blank" rel="noreferrer nofollow">
-        {title}
-        <FontAwesomeIcon icon="external-link" />
+    const items = technologies.map<React.ReactNode>(({ url, title }, index) =>
+      <Link key={`Link-${index}`} href={`${url}`} target="_blank" rel="noreferrer nofollow">
+        <span>
+          {`${title}`}
+          <span className="material-icons">link</span>
+        </span>
       </Link>
     );
     return items.reduce((previousValue, currentValue) => [previousValue, ', ', currentValue]);
@@ -50,7 +37,7 @@ export const TechnologiesGroup: React.FC<TechnologiesGroupProps> = (props) => {
 
   return (
     <Wrapper>
-      <SectionTitle variant="h3">{props.title}</SectionTitle>
+      <SectionTitle variant="h3">{title}</SectionTitle>
       {renderItems()}
     </Wrapper>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const H2Title = styled.h2`
   margin-bottom: 0.7em;

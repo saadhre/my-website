@@ -1,11 +1,5 @@
+import '@material-design-icons/font/filled.css';
 import styled from "styled-components";
-
-import { library } from "@fortawesome/fontawesome-svg-core";
-
-import { faExternalLink } from "@fortawesome/free-solid-svg-icons/faExternalLink";
-import { faCode } from "@fortawesome/free-solid-svg-icons/faCode";
-
-library.add(faExternalLink, faCode);
 
 export const Layout = styled.div`
   padding: 15px 15px;

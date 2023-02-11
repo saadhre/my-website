@@ -1,13 +1,8 @@
-import type { NextPage, NextPageContext } from 'next'
-import type { ApiConnectedPage, Homepage, SiteData } from "../lib/types";
+import type { GetStaticProps } from 'next'
+import type { ApiPersonalData, ApiHomepageHomepage } from "../schemas";
 
-import React from "react";
-import Head from "next/head";
-import { renderMetaTags } from "react-datocms";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
-import { request } from "../lib/datocms";
-import { HOMEPAGE_QUERY } from "../lib/queries";
+import React from "react";
 
 import {
   CompanyData,
@@ -18,58 +13,55 @@ import {
   TechnologiesGroup,
   ViewSource
 } from "../components/Layout";
-import { Richtext } from "../components/Richtext";
-import { NextApiRequest } from "next/dist/shared/lib/utils";
-import { PreviewModeIndicator } from "../components/previewModeIndicator";
+import { StrapiMarkdown } from "../components/StrapiMarkdown";
+import { ApiSeoTags } from "../components/ApiSeoTags";
 
-const Home: NextPage<ApiConnectedPage<Homepage & SiteData>> = ({ isPreviewMode, data: { homepage, site } }) => {
-  const { languages, technologies, description, _seoMetaTags } = homepage
+import { QUERY_HOMEPAGE, QUERY_PERSONAL_DATA } from "../lib/queries";
+import { request } from "../lib/strapi";
 
-  const renderMeta = () => {
-    const tags = site ? _seoMetaTags.concat(site.favicon) : _seoMetaTags;
-    return renderMetaTags(tags);
-  }
+interface HomeProps {
+  homepage: ApiHomepageHomepage;
+  personalData: ApiPersonalData;
+}
+
+const Home: React.FC<HomeProps> = ({ personalData, homepage }) => {
+  const { description, technologyGroups, seo } = homepage.attributes;
 
   return (
     <Layout>
-      <Head>{renderMeta()}</Head>
+      <ApiSeoTags {...seo} />
+      <PageHeader personalData={personalData} />
+      <StrapiMarkdown content={description} />
 
-      <PageHeader homepage={homepage} />
-
-      <Richtext dangerouslySetInnerHTML={{ __html: description }} />
-
-      {technologies.map((value, index) => (
-        <TechnologiesGroup key={`Group-${index}`} {...value} />
+      {technologyGroups.map((group, index) => (
+        <TechnologiesGroup key={`Group-${index}`} group={group} />
       ))}
 
       <Footer>
-        <ContactForm languages={languages} />
-        <CompanyData homepage={homepage} />
+        <ContactForm languages={personalData.attributes.languages} />
+        <CompanyData personalData={personalData} />
       </Footer>
 
       <ViewSource />
-      {isPreviewMode && <PreviewModeIndicator />}
+      {/*{isPreviewMode && <PreviewModeIndicator />}*/}
     </Layout>
   )
 }
 
-export async function getStaticProps(context: NextPageContext & NextApiRequest) {
-  const currenLocale = context.locale || 'pl';
-  const isPreviewMode = !!context.preview;
+export const getStaticProps: GetStaticProps = async (context) => {
+  const locale = context.locale || 'pl';
+  const includeDrafts = !!context.preview;
 
-  const data = await request({
-    query: HOMEPAGE_QUERY.replace(/:locale:/g, currenLocale),
-    variables: { limit: 10 },
-    includeDrafts: isPreviewMode,
-  });
+  const personalDataResponse = await request(QUERY_PERSONAL_DATA, { locale }, includeDrafts);
+  const homepageResponse = await request(QUERY_HOMEPAGE, { locale }, includeDrafts);
 
   return {
     props: {
-      isPreviewMode,
-      data,
-      ...await serverSideTranslations(currenLocale, ['common'])
+      personalData: personalDataResponse.personalData.data,
+      homepage: homepageResponse.homepage.data,
+      ...await serverSideTranslations(locale, ['common'])
     }
   };
-}
+};
 
 export default Home

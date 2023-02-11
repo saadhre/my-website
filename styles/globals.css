@@ -25,9 +25,12 @@ h1, h2, h3, h4, h5, h6, p {
 a, a:visited {
   color: var(--color-brand);
   transition: color var(--transition);
-  text-decoration-style: dotted;
 }
 
 a:hover {
   color: var(--color-alternative);
+}
+
+a > span {
+  display: inline-block;
 }
