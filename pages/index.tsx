@@ -13,8 +13,8 @@ import {
   TechnologiesGroup,
   ViewSource
 } from "../components/Layout";
+import { MetaTags } from "../components/MetaTags";
 import { StrapiMarkdown } from "../components/StrapiMarkdown";
-import { ApiSeoTags } from "../components/ApiSeoTags";
 
 import { QUERY_HOMEPAGE, QUERY_PERSONAL_DATA } from "../lib/queries";
 import { request } from "../lib/strapi";
@@ -29,7 +29,7 @@ const Home: React.FC<HomeProps> = ({ personalData, homepage }) => {
 
   return (
     <Layout>
-      <ApiSeoTags {...seo} />
+      <MetaTags {...seo} />
       <PageHeader personalData={personalData} />
       <StrapiMarkdown content={description} />
 

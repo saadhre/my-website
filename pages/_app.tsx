@@ -3,14 +3,8 @@ import type { AppProps } from "next/app";
 import "../styles/globals.css";
 
 import React from "react";
-import ReactGA from 'react-ga';
 import { appWithTranslation } from "next-i18next";
-
-const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID;
-
-if (googleAnalyticsId) {
-  ReactGA.initialize(googleAnalyticsId);
-}
+import Script from "next/script";
 
 interface GlobalData {
   someProp: string;
@@ -27,9 +21,28 @@ interface AppPropsCustom extends AppProps {
 }
 
 function MyApp({ Component, pageProps, global }: AppPropsCustom) {
+  const analytics = process.env.NEXT_PUBLIC_GA_ID;
+
   return (
     <AppGlobalContext.Provider value={global}>
       <Component {...pageProps} />
+      {analytics && (
+        <>
+          <Script src={`https://www.googletagmanager.com/gtag/js?id=${analytics}`} strategy="afterInteractive" />
+          <Script
+            id="googleAnalytics"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                
+                  gtag('config', '${analytics}');`
+            }}
+          />
+        </>
+      )}
     </AppGlobalContext.Provider>
   );
 }

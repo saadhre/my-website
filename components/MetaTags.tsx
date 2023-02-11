@@ -7,7 +7,7 @@ import React from "react";
 
 import { mediaUrl } from "../lib/strapi";
 
-export const ApiSeoTags: React.FC<NextSeoProps & ApiSeo> = ({ ogImage, ...props }) => {
+export const MetaTags: React.FC<NextSeoProps & ApiSeo> = ({ ogImage, ...props }) => {
   const { locale } = useRouter();
 
   // @todo alternate languages
