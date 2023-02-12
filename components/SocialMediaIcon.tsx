@@ -14,7 +14,7 @@ export const SocialMediaIcon: React.FC<SocialMediaIconProps> = ({ medium }) => {
 
   return (
     <IconLink href={profileUrl} target="_blank" rel="noreferrer nofollow">
-      <StrapiImage media={icon} alt={title} />
+      <StrapiImage media={icon} alt={title} format="thumbnail" />
     </IconLink>
   );
 };
