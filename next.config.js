@@ -9,6 +9,7 @@ const nextConfig = {
     remotePatterns: [
       { hostname: 'localhost' },
       { hostname: 'api.shatkevich.dev' },
+      { hostname: 'media.shatkevich.dev' },
     ]
   }
 }
