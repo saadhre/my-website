@@ -1,17 +1,12 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { ajvResolver } from "@hookform/resolvers/ajv";
 import axios from "axios";
 import { Trans, useTranslation } from "next-i18next";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import * as yup from "yup";
-import { pl } from "yup-locales";
-
-import { ContactFormValidationSchema } from "../../lib/api";
 
 import { Disclaimer, Form, FormError, FormField, FormFieldError, SubmitButton, SuccessMessage } from "../Form";
 import { SectionTitle } from "../SectionTitle";
 
-yup.setLocale(pl);
 
 export interface ContactFormProps {
   languages: string;
@@ -29,14 +24,35 @@ export const ContactForm: React.FC<ContactFormProps> = ({ languages }) => {
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState("");
 
+  const stringProperty = (minLength = 2, pattern: string = '') => {
+    return {
+      type: 'string',
+      minLength,
+      pattern,
+      errorMessage: {
+        minLength: t('errors.fieldRequired', 'To pole jest wymagane'),
+        pattern: t('errors.email', 'Niepoprawny adres e-mail'),
+      },
+    };
+  };
+
   const { register, handleSubmit, formState: { errors } } = useForm<ContactFormInputs>({
-    resolver: yupResolver(ContactFormValidationSchema),
+    resolver: ajvResolver({
+      type: 'object',
+      properties: {
+        name: stringProperty(),
+        message: stringProperty(),
+        email: stringProperty(5, '^.+\@.+\..+$'),
+      },
+      required: ['name'],
+      additionalProperties: false,
+    }),
   });
 
   const onSubmit: SubmitHandler<ContactFormInputs> = data => {
     setWorking(true);
 
-    axios.post('/api/process-contact', data).then(() => {
+    axios.post(`${process.env.NEXT_PUBLIC_API}/process-contact-form`, data, {}).then(() => {
       setSuccess(true);
     }).catch(reason => {
       setError(t('errorContactProcessing', 'Ups, coś się popsuło 😢 Spróbuj jeszcze raz. Kod błędu: {{code}}', { code: reason.response.status }));
