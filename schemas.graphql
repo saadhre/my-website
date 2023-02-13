@@ -5,7 +5,7 @@ schema {
   mutation: Mutation
 }
 
-union GenericMorph = ComponentDictionariesSocialMedia | ComponentDictionariesTechnology | ComponentDictionariesTechnologyGroup | ComponentSettingsSeo | Homepage | I18NLocale | PersonalData | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = ComponentDictionariesSocialMedia | ComponentDictionariesTechnology | ComponentDictionariesTechnologyGroup | ComponentSharedMetaSocial | ComponentSharedSeo | Homepage | I18NLocale | PersonalData | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | WebsiteBuilderLog
 
 type ComponentDictionariesSocialMedia {
   icon: UploadFileEntityResponse
@@ -26,12 +26,25 @@ type ComponentDictionariesTechnologyGroup {
   title: String!
 }
 
-type ComponentSettingsSeo {
-  description: String
+type ComponentSharedMetaSocial {
+  description: String!
+  id: ID!
+  image: UploadFileEntityResponse
+  socialNetwork: ENUM_COMPONENTSHAREDMETASOCIAL_SOCIALNETWORK!
+  title: String!
+}
+
+type ComponentSharedSeo {
+  canonicalURL: String
   id: ID!
   keywords: String
-  ogImage: UploadFileEntityResponse
-  title: String
+  metaDescription: String!
+  metaImage: UploadFileEntityResponse!
+  metaRobots: String
+  metaSocial(filters: ComponentSharedMetaSocialFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentSharedMetaSocial]
+  metaTitle: String!
+  metaViewport: String
+  structuredData: JSON
 }
 
 type Homepage {
@@ -39,7 +52,8 @@ type Homepage {
   description: String
   locale: String
   localizations: HomepageRelationResponseCollection
-  seo: ComponentSettingsSeo
+  preview: String
+  seo: ComponentSharedSeo
   technologyGroups(filters: ComponentDictionariesTechnologyGroupFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentDictionariesTechnologyGroup]
   updatedAt: DateTime
 }
@@ -89,6 +103,7 @@ type Mutation {
   createUsersPermissionsRole(data: UsersPermissionsRoleInput!): UsersPermissionsCreateRolePayload
   "Create a new user"
   createUsersPermissionsUser(data: UsersPermissionsUserInput!): UsersPermissionsUserEntityResponse!
+  createWebsiteBuilderLog(data: WebsiteBuilderLogInput!): WebsiteBuilderLogEntityResponse
   deleteHomepage(locale: I18NLocaleCode): HomepageEntityResponse
   deletePersonalData(locale: I18NLocaleCode): PersonalDataEntityResponse
   deleteUploadFile(id: ID!): UploadFileEntityResponse
@@ -97,6 +112,7 @@ type Mutation {
   deleteUsersPermissionsRole(id: ID!): UsersPermissionsDeleteRolePayload
   "Delete an existing user"
   deleteUsersPermissionsUser(id: ID!): UsersPermissionsUserEntityResponse!
+  deleteWebsiteBuilderLog(id: ID!): WebsiteBuilderLogEntityResponse
   "Confirm an email users email address"
   emailConfirmation(confirmation: String!): UsersPermissionsLoginPayload
   "Request a reset password token"
@@ -117,6 +133,7 @@ type Mutation {
   updateUsersPermissionsRole(data: UsersPermissionsRoleInput!, id: ID!): UsersPermissionsUpdateRolePayload
   "Update an existing user"
   updateUsersPermissionsUser(data: UsersPermissionsUserInput!, id: ID!): UsersPermissionsUserEntityResponse!
+  updateWebsiteBuilderLog(data: WebsiteBuilderLogInput!, id: ID!): WebsiteBuilderLogEntityResponse
   upload(field: String, file: Upload!, info: FileInfoInput, ref: String, refId: ID): UploadFileEntityResponse!
 }
 
@@ -175,6 +192,8 @@ type Query {
   usersPermissionsRoles(filters: UsersPermissionsRoleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsRoleEntityResponseCollection
   usersPermissionsUser(id: ID): UsersPermissionsUserEntityResponse
   usersPermissionsUsers(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsUserEntityResponseCollection
+  websiteBuilderLog(id: ID): WebsiteBuilderLogEntityResponse
+  websiteBuilderLogs(filters: WebsiteBuilderLogFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): WebsiteBuilderLogEntityResponseCollection
 }
 
 type ResponseCollectionMeta {
@@ -354,6 +373,38 @@ type UsersPermissionsUserRelationResponseCollection {
   data: [UsersPermissionsUserEntity!]!
 }
 
+type WebsiteBuilderLog {
+  createdAt: DateTime
+  status: Int
+  trigger: ENUM_WEBSITEBUILDERLOG_TRIGGER
+  updatedAt: DateTime
+}
+
+type WebsiteBuilderLogEntity {
+  attributes: WebsiteBuilderLog
+  id: ID
+}
+
+type WebsiteBuilderLogEntityResponse {
+  data: WebsiteBuilderLogEntity
+}
+
+type WebsiteBuilderLogEntityResponseCollection {
+  data: [WebsiteBuilderLogEntity!]!
+  meta: ResponseCollectionMeta!
+}
+
+enum ENUM_COMPONENTSHAREDMETASOCIAL_SOCIALNETWORK {
+  Facebook
+  Twitter
+}
+
+enum ENUM_WEBSITEBUILDERLOG_TRIGGER {
+  cron
+  event
+  manual
+}
+
 "A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar."
 scalar DateTime
 
@@ -433,12 +484,34 @@ input ComponentDictionariesTechnologyInput {
   url: String
 }
 
-input ComponentSettingsSeoInput {
+input ComponentSharedMetaSocialFiltersInput {
+  and: [ComponentSharedMetaSocialFiltersInput]
+  description: StringFilterInput
+  not: ComponentSharedMetaSocialFiltersInput
+  or: [ComponentSharedMetaSocialFiltersInput]
+  socialNetwork: StringFilterInput
+  title: StringFilterInput
+}
+
+input ComponentSharedMetaSocialInput {
   description: String
   id: ID
-  keywords: String
-  ogImage: ID
+  image: ID
+  socialNetwork: ENUM_COMPONENTSHAREDMETASOCIAL_SOCIALNETWORK
   title: String
+}
+
+input ComponentSharedSeoInput {
+  canonicalURL: String
+  id: ID
+  keywords: String
+  metaDescription: String
+  metaImage: ID
+  metaRobots: String
+  metaSocial: [ComponentSharedMetaSocialInput]
+  metaTitle: String
+  metaViewport: String
+  structuredData: JSON
 }
 
 input DateTimeFilterInput {
@@ -497,7 +570,8 @@ input FloatFilterInput {
 
 input HomepageInput {
   description: String
-  seo: ComponentSettingsSeoInput
+  preview: String
+  seo: ComponentSharedSeoInput
   technologyGroups: [ComponentDictionariesTechnologyGroupInput]
 }
 
@@ -773,4 +847,20 @@ input UsersPermissionsUserInput {
   resetPasswordToken: String
   role: ID
   username: String
+}
+
+input WebsiteBuilderLogFiltersInput {
+  and: [WebsiteBuilderLogFiltersInput]
+  createdAt: DateTimeFilterInput
+  id: IDFilterInput
+  not: WebsiteBuilderLogFiltersInput
+  or: [WebsiteBuilderLogFiltersInput]
+  status: IntFilterInput
+  trigger: StringFilterInput
+  updatedAt: DateTimeFilterInput
+}
+
+input WebsiteBuilderLogInput {
+  status: Int
+  trigger: ENUM_WEBSITEBUILDERLOG_TRIGGER
 }

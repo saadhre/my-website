@@ -1,5 +1,5 @@
 import type { GetStaticProps } from 'next'
-import type { ApiPersonalData, ApiHomepageHomepage } from "../schemas";
+import type { ApiPersonalData, ApiHomepage } from "../schemas";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React from "react";
@@ -20,7 +20,7 @@ import { QUERY_HOMEPAGE, QUERY_PERSONAL_DATA } from "../lib/queries";
 import { request } from "../lib/strapi";
 
 interface HomeProps {
-  homepage: ApiHomepageHomepage;
+  homepage: ApiHomepage;
   personalData: ApiPersonalData;
 }
 

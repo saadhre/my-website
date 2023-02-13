@@ -24,10 +24,11 @@ export interface ApiImage {
 }
 
 export interface ApiSeo {
-  title: string,
-  description: string,
+  metaTitle: string,
+  metaDescription: string,
   keywords: string,
-  ogImage: ApiImage,
+  metaImage: ApiImage,
+  canonicalURL: string;
 }
 
 export interface ApiSocialMediaLink {
@@ -65,7 +66,7 @@ export interface ApiTechnologyGroup {
   technologies: ApiTechnology[],
 }
 
-export interface ApiHomepageHomepage {
+export interface ApiHomepage {
   attributes: {
     description: string,
     technologyGroups: ApiTechnologyGroup[],

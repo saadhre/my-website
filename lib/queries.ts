@@ -65,10 +65,10 @@ export const QUERY_HOMEPAGE = gql`
             }
           }
           seo {
-            title
-            description
+            metaTitle
+            metaDescription
             keywords
-            ogImage {
+            metaImage {
               ...Image
             }
           }
