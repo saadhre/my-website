@@ -68,6 +68,7 @@ export const QUERY_HOMEPAGE = gql`
             metaTitle
             metaDescription
             keywords
+            canonicalURL
             metaImage {
               ...Image
             }
