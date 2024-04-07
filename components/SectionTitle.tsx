@@ -1,4 +1,4 @@
-import React from "react";
+import type { PropsWithChildren } from "react";
 import styled from "styled-components";
 
 export const H2Title = styled.h2`
@@ -12,8 +12,7 @@ export const H3Title = styled.h3`
 interface SectionTitleProps {
   variant?: "h2" | "h3"
 }
-
-export const SectionTitle: React.FC<React.PropsWithChildren<SectionTitleProps>> = ({ children, variant = "h2" }) => {
+export const SectionTitle = ({ children, variant = "h2" }: PropsWithChildren<SectionTitleProps>) => {
   const Title = variant === "h2" ? H2Title : H3Title;
 
   return <Title>{children}</Title>;

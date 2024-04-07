@@ -1,16 +1,11 @@
 import { ajvResolver } from "@hookform/resolvers/ajv";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Trans, useTranslation } from "next-i18next";
-import React from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import { type SubmitHandler, useForm } from "react-hook-form";
 
 import { Disclaimer, Form, FormError, FormField, FormFieldError, SubmitButton, SuccessMessage } from "../Form";
 import { SectionTitle } from "../SectionTitle";
-
-
-export interface ContactFormProps {
-  languages: string;
-}
 
 export interface ContactFormInputs {
   name: string;
@@ -18,11 +13,14 @@ export interface ContactFormInputs {
   message: string;
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({ languages }) => {
+export interface ContactFormProps {
+  languages: string;
+}
+export const ContactForm = ({ languages }: ContactFormProps) => {
   const { t } = useTranslation();
-  const [working, setWorking] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
-  const [error, setError] = React.useState("");
+  const [working, setWorking] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const stringProperty = (minLength = 2, pattern: string = '') => {
     return {
@@ -44,21 +42,25 @@ export const ContactForm: React.FC<ContactFormProps> = ({ languages }) => {
         message: stringProperty(),
         email: stringProperty(5, '^.+\@.+\..+$'),
       },
-      required: ['name'],
+      required: ['name', 'email', 'message'],
       additionalProperties: false,
     }),
   });
 
-  const onSubmit: SubmitHandler<ContactFormInputs> = data => {
+  const onSubmit: SubmitHandler<ContactFormInputs> = async data => {
     setWorking(true);
-
-    axios.post(`${process.env.NEXT_PUBLIC_API}/process-contact-form`, data, {}).then(() => {
+    try {
+      await axios.post(`/api/process-contact-form`, data, {});
       setSuccess(true);
-    }).catch(reason => {
-      setError(t('errorContactProcessing', 'Ups, coś się popsuło 😢 Spróbuj jeszcze raz. Kod błędu: {{code}}', { code: reason.response.status }));
-    }).finally(() => {
+    } catch (e) {
+      let errorMessage = 'Ups, wystąpił nieznany błąd 😢 Spróbuj jeszcze raz.';
+      if (e instanceof AxiosError) {
+        errorMessage = t('errorContactProcessing', 'Ups, coś się popsuło 😢 Spróbuj jeszcze raz. Kod błędu: {{code}}', { code: e.code });
+      }
+      setError(errorMessage);
+    } finally {
       setWorking(false);
-    });
+    }
   }
 
   return (

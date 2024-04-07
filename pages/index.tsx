@@ -1,67 +1,57 @@
 import type { GetStaticProps } from 'next'
-import type { ApiPersonalData, ApiHomepage } from "../schemas";
-
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React from "react";
 
+import type { AboutRecord, SkillsCategoryRecord } from "../graphql/generated";
+import { HOMEPAGE_QUERY } from "../graphql/queries";
 import {
   CompanyData,
   ContactForm,
   Footer,
   Layout,
   PageHeader,
-  TechnologiesGroup,
+  SkillsCategory,
   ViewSource
 } from "../components/Layout";
-import { MetaTags } from "../components/MetaTags";
-import { StrapiMarkdown } from "../components/StrapiMarkdown";
-
-import { QUERY_HOMEPAGE, QUERY_PERSONAL_DATA } from "../lib/queries";
-import { request } from "../lib/strapi";
+import { Description } from "../components/Description";
+import { fetchCmsData } from "../lib/datocms";
 
 interface HomeProps {
-  homepage: ApiHomepage;
-  personalData: ApiPersonalData;
+  isPreview: boolean;
+  homepage: {
+    about: AboutRecord;
+    skills: SkillsCategoryRecord[];
+  }
 }
-
-const Home: React.FC<HomeProps> = ({ personalData, homepage }) => {
-  const { description, technologyGroups, seo } = homepage.attributes;
-
+const Home = ({ homepage: { about, skills }, isPreview }: HomeProps) => {
   return (
-    <Layout>
-      <MetaTags {...seo} />
-      <PageHeader personalData={personalData} />
-      <StrapiMarkdown content={description} />
-
-      {technologyGroups.map((group, index) => (
-        <TechnologiesGroup key={`Group-${index}`} group={group} />
+    <Layout seo={about._seoMetaTags} isPreview={isPreview}>
+      <PageHeader about={about} />
+      <Description content={about.description!} />
+      {skills.map((group, index) => (
+        <SkillsCategory key={`Group-${index}`} group={group} />
       ))}
-
       <Footer>
-        <ContactForm languages={personalData.attributes.languages} />
-        <CompanyData personalData={personalData} />
+        <ContactForm languages={about.languages!} />
+        <CompanyData about={about} />
       </Footer>
-
       <ViewSource />
-      {/*{isPreviewMode && <PreviewModeIndicator />}*/}
     </Layout>
   )
 }
+export default Home
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const locale = context.locale || 'pl';
+
   const includeDrafts = !!context.preview;
 
-  const personalDataResponse = await request(QUERY_PERSONAL_DATA, { locale }, includeDrafts);
-  const homepageResponse = await request(QUERY_HOMEPAGE, { locale }, includeDrafts);
-
+  const { data: homepage } = await fetchCmsData({ query: HOMEPAGE_QUERY, variables: { locale }, includeDrafts });
   return {
     props: {
-      personalData: personalDataResponse.personalData.data,
-      homepage: homepageResponse.homepage.data,
+      isPreview: includeDrafts,
+      homepage,
       ...await serverSideTranslations(locale, ['common'])
     }
   };
 };
-
-export default Home

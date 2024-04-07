@@ -1,11 +1,8 @@
-import type { ApiPersonalData } from "../../schemas";
-
-import React from "react";
+import { Image as DatoImage, type ResponsiveImageType } from "react-datocms";
 import styled from "styled-components";
 
+import type { AboutRecord } from "../../graphql/generated";
 import { IconsList } from "../IconsList";
-import { StrapiImage } from "../StrapiImage";
-
 import { CompanyLogo } from "./CompanyLogo";
 import { HeaderMiddle } from "./HeaderMiddle";
 import { LanguageSelector } from "./LanguageSelector";
@@ -26,7 +23,7 @@ const Wrapper = styled.div`
   }
 
   @media (min-width: 768px) {
-    grid-template-columns: 150px 1fr 1fr;
+    grid-template-columns: 156px 1fr 1fr;
     grid-column-gap: 3em;
 
     ${IconsList} {
@@ -41,16 +38,15 @@ const Wrapper = styled.div`
 `;
 
 interface PageHeaderProps {
-  personalData: ApiPersonalData;
+  about: AboutRecord;
 }
-
-export const PageHeader: React.FC<PageHeaderProps> = ({ personalData }) => {
-  const { attributes: { photo } } = personalData;
+export const PageHeader = ({ about }: PageHeaderProps) => {
+  const { photo } = about;
 
   return (
     <Wrapper>
-      <StrapiImage media={photo} priority format="thumbnail" />
-      <HeaderMiddle personalData={personalData} />
+      {photo && <div><DatoImage data={photo?.responsiveImage as ResponsiveImageType} /></div>}
+      <HeaderMiddle about={about} />
       <div className="right-part">
         <CompanyLogo />
         <LanguageSelector />

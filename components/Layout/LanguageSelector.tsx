@@ -1,9 +1,16 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
 import styled from "styled-components";
 
 import { opacityTransition } from "../../styles/transitions";
+
+const Wrapper = styled.div`
+  display: flex;
+  column-gap: .4em;
+  @media (min-width: 768px) {
+    justify-content: flex-end;
+  }
+`;
 
 const Language = styled.span`
   color: var(--color-white) !important;
@@ -20,15 +27,7 @@ const Language = styled.span`
   }
 `;
 
-const Wrapper = styled.div`
-  display: flex;
-  column-gap: .4em;
-  @media (min-width: 768px) {
-    justify-content: flex-end;
-  }
-`;
-
-export const LanguageSelector: React.FC = () => {
+export const LanguageSelector = () => {
   const { locale: currentLocale, locales } = useRouter();
 
   return (

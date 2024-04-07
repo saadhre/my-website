@@ -1,24 +1,20 @@
-import type { ApiPersonalData } from "../../schemas";
-
 import { Trans } from "next-i18next";
-import React from "react";
 
+import type { AboutRecord } from "../../graphql/generated";
 import { SocialMediaIcon } from "../SocialMediaIcon";
 import { IconsList } from "../IconsList";
-
 import { PageTitle } from "./PageTitle";
 import { PageSubtitle } from "./PageSubtitle";
 
 interface HeaderMiddleProps {
-  personalData: ApiPersonalData;
+  about: AboutRecord;
 }
-
-export const HeaderMiddle: React.FC<HeaderMiddleProps> = ({ personalData }) => {
-  const { fullName, job, socialMedia } = personalData.attributes;
+export const HeaderMiddle = ({ about }: HeaderMiddleProps) => {
+  const { fullname, job, socialMedia } = about;
 
   return (
     <div>
-      <PageTitle>{fullName}</PageTitle>
+      <PageTitle>{fullname}</PageTitle>
       <PageSubtitle>{job}</PageSubtitle>
       <p>
         <Trans

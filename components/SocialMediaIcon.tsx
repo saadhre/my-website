@@ -1,20 +1,18 @@
-import type { ApiSocialMediaLink } from "../schemas";
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import React from "react";
-
+import type { SocialMediumRecord } from "../graphql/generated";
 import { IconLink } from "./IconLink";
-import { StrapiImage } from "./StrapiImage";
 
 interface SocialMediaIconProps {
-  medium: ApiSocialMediaLink;
+  medium: SocialMediumRecord;
 }
-
 export const SocialMediaIcon: React.FC<SocialMediaIconProps> = ({ medium }) => {
   const { profileUrl, icon, title } = medium;
 
   return (
-    <IconLink href={profileUrl} target="_blank" rel="noreferrer nofollow">
-      <StrapiImage media={icon} alt={title} format="thumbnail" />
+    <IconLink href={`${profileUrl}`} target="_blank" rel="noreferrer nofollow">
+      <FontAwesomeIcon icon={icon as IconProp} />
     </IconLink>
   );
 };

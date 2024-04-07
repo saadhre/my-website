@@ -1,30 +1,15 @@
 import type { AppProps } from "next/app";
-
-import "../styles/globals.css";
-
-import React from "react";
 import { appWithTranslation } from "next-i18next";
 import Script from "next/script";
 
-interface GlobalData {
-  someProp: string;
-  someOtherProp: number;
-}
+import "../styles/globals.css";
 
-const AppGlobalContext = React.createContext<GlobalData>({
-  someProp: '',
-  someOtherProp: 100,
-});
-
-interface AppPropsCustom extends AppProps {
-  global: GlobalData;
-}
-
-function MyApp({ Component, pageProps, global }: AppPropsCustom) {
+interface AppPropsCustom extends AppProps {}
+function MyApp({ Component, pageProps }: AppPropsCustom) {
   const analytics = process.env.NEXT_PUBLIC_GA_ID;
 
   return (
-    <AppGlobalContext.Provider value={global}>
+    <>
       <Component {...pageProps} />
       {analytics && (
         <>
@@ -43,7 +28,7 @@ function MyApp({ Component, pageProps, global }: AppPropsCustom) {
           />
         </>
       )}
-    </AppGlobalContext.Provider>
+    </>
   );
 }
 

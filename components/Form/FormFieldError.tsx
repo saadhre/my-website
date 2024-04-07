@@ -1,10 +1,7 @@
 import type { FieldErrorProps } from "../../lib/types";
+import { ErrorMessage } from "./ErrorMessage";
 
-import React from "react";
-
-import { ErrorMessage } from "../ErrorMessage";
-
-export const FormFieldError: React.FC<FieldErrorProps> = ({ error }) => {
+export const FormFieldError = ({ error }: FieldErrorProps) => {
   if (!error) return null;
 
   return <ErrorMessage>{error.message}</ErrorMessage>;

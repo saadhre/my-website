@@ -1,12 +1,7 @@
-import React from "react";
+import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
 import { Marker } from "./Marker";
-
-const parsePosition = (position: string) => {
-  const [latitude, longitude] = position.split(',');
-  return new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude));
-}
 
 const Wrapper = styled.div`
   height: 300px;
@@ -16,12 +11,16 @@ const Wrapper = styled.div`
 export interface MapWithMarkerProps {
   position: string;
 }
+export const MapWithMarker = ({ position }: MapWithMarkerProps) => {
+  const [map, setMap] = useState<google.maps.Map>();
+  const mapRef = useRef<HTMLDivElement>(null);
 
-export const MapWithMarker: React.FC<MapWithMarkerProps> = ({ position }) => {
-  const [map, setMap] = React.useState<google.maps.Map>();
-  const mapRef = React.useRef<HTMLDivElement>(null);
+  const parsePosition = (position: string) => {
+    const [latitude, longitude] = position.split(',');
+    return new google.maps.LatLng(parseFloat(latitude), parseFloat(longitude));
+  }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (mapRef.current && !map && position) {
       setMap(new window.google.maps.Map(mapRef.current, {
         center: parsePosition(position),

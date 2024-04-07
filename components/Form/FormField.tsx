@@ -14,7 +14,7 @@ export const FormField = styled.div`
 
   > input, > textarea {
     padding: 1em;
-    font-family: var(--font-family);
+    font-family: var(--font-family), sans-serif;
     font-size: 1.2em;
     appearance: none;
     border-radius: var(--border-radius);

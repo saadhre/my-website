@@ -1,24 +1,31 @@
-import type { ApiPersonalData } from "../../../schemas";
-
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { Trans } from "next-i18next";
-import React from "react";
 
+import type { AboutRecord } from "../../../graphql/generated";
 import { SectionTitle } from "../../SectionTitle";
-
 import { InnerWrapper } from "./InnerWrapper";
 import { Address } from "./Address";
 import { MapWithMarker } from "./MapWithMarker";
 
 interface CompanyDataProps {
-  personalData: ApiPersonalData;
+  about: AboutRecord;
 }
+export const CompanyData = ({ about }: CompanyDataProps) => {
+  const {
+    companyLocation,
+    companyName,
+    street,
+    postalCode,
+    city,
+    phone,
+    contactEmail,
+    vatId,
+    regon
+  } = about;
 
-export const CompanyData: React.FC<CompanyDataProps> = ({ personalData }) => {
-  const { latLng, companyName, street, postalCode, city, phone, contactEmail, vatId, regon } = personalData.attributes;
   const mapApiKey = String(process.env.NEXT_PUBLIC_GOOGLE_API_KEY);
 
-  const rawPhone = () => phone.split(' ').join('').substring(1);
+  const rawPhone = () => (phone || '').split(' ').join('').substring(1);
 
   return (
     <div>
@@ -30,7 +37,7 @@ export const CompanyData: React.FC<CompanyDataProps> = ({ personalData }) => {
       </SectionTitle>
       <Wrapper apiKey={mapApiKey}>
         <InnerWrapper>
-          <MapWithMarker position={latLng} />
+          <MapWithMarker position={`${companyLocation?.latitude},${companyLocation?.longitude}`} />
           <Address>
             <h3>{companyName}</h3>
             <p>
