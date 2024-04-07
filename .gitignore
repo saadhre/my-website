@@ -37,6 +37,7 @@ yarn-error.log*
 .env.local
 
 .idea/
+.yarn/install-state.gz
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
