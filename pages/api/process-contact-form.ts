@@ -37,8 +37,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   };
 
+  let credentials;
+
+  if (process.env.SES_ACCESS_KEY_ID && process.env.SES_SECRET_ACCESS_KEY) {
+    credentials = {
+      accessKeyId: `${process.env.SES_ACCESS_KEY_ID}`,
+      secretAccessKey: `${process.env.SES_SECRET_ACCESS_KEY}`,
+    }
+  }
+
   const client = new SESClient({
     region: "eu-central-1",
+    credentials,
   });
 
   const command = new SendEmailCommand(input);
