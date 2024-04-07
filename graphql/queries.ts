@@ -4,7 +4,7 @@ export const HOMEPAGE_QUERY = gql`
   query Homepage($locale: SiteLocale) {
     about(locale:$locale) {
       photo {
-        responsiveImage(imgixParams: { w: 156, h:156 }) {
+        responsiveImage(imgixParams: { w: 156, h: 156, fm: webp }) {
           sizes
           src
           width
