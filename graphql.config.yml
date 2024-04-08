@@ -1,7 +1,7 @@
 schema:
   - https://graphql.datocms.com:
       headers:
-        Authorization: "Bearer cb6eb141469ca1c6d05339e42115b7"
+        Authorization: "Bearer YOUR_API_TOKEN"
 documents: './graphql/**/*.graphql'
 generates:
   graphql/generated.ts:
